@@ -15,6 +15,7 @@ public class BulletCtrl : MonoBehaviour
     void BulletDisable()
     {
         this.gameObject.SetActive(false);
+        CancelInvoke("BulletDisable");
     }
     private void OnEnable()
     {
