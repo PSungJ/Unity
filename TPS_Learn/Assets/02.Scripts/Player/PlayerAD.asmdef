@@ -1,0 +1,16 @@
+{
+    "name": "PlayerAD",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b7e5c1ddfbc6b9d4f829667e6a377353"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

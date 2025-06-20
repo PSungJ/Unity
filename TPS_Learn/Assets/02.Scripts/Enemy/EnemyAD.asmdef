@@ -1,0 +1,17 @@
+{
+    "name": "EnemyAD",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b7e5c1ddfbc6b9d4f829667e6a377353",
+        "GUID:96dda131df435a5419ab25d243b351f1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
