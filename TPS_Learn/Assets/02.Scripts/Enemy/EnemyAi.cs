@@ -16,6 +16,8 @@ public class EnemyAi : MonoBehaviour
     private readonly int hashSpeed = Animator.StringToHash("Speed");
     private readonly int hashDie = Animator.StringToHash("Die");
     private readonly int hashDieIdx = Animator.StringToHash("DieIdx");
+    private readonly int hashoffSet = Animator.StringToHash("Offset");
+    private readonly int hashWalkSpeed = Animator.StringToHash("WalkSpeed");
     private Transform playerTr;
     private Transform tr;
     private MoveAgent moveAgent;
@@ -41,6 +43,8 @@ public class EnemyAi : MonoBehaviour
     {
         StartCoroutine(CheckState());
         StartCoroutine(CheckAction());
+        ani.SetFloat(hashoffSet, Random.Range(0f, 1f));
+        ani.SetFloat(hashWalkSpeed, Random.Range(1f, 1.5f));
     }
     IEnumerator CheckState()
     {

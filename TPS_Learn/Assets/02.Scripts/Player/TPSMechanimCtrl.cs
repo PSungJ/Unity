@@ -9,7 +9,7 @@ public class TPSMechanimCtrl : MonoBehaviour
     private TPSPlayerInput input;
     private Rigidbody rb;
     private float moveSpeed = 5f;
-    private float maxSpeed = 10f;
+    //private float maxSpeed = 10f;
     private float rotSpeed = 500f;
     public bool isRun = false;
     private readonly int hashPosX = Animator.StringToHash("PosX");

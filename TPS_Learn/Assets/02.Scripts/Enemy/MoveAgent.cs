@@ -73,6 +73,7 @@ public class MoveAgent : MonoBehaviour
         {
             group.GetComponentsInChildren<Transform>(wayPointList);
             wayPointList.RemoveAt(0);
+            nextIdx = Random.Range(0, wayPointList.Count);
         }
         #endregion
         navi = GetComponent<NavMeshAgent>();
@@ -101,7 +102,8 @@ public class MoveAgent : MonoBehaviour
 
         if (navi.remainingDistance <= 0.5f)
         {
-            nextIdx = ++nextIdx % wayPointList.Count;
+            //nextIdx = ++nextIdx % wayPointList.Count;
+            nextIdx = Random.Range(0, wayPointList.Count);
             MoveWayPoint();
         }
     }

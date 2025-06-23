@@ -12,12 +12,14 @@ public class BarrelCtrl : MonoBehaviour
     [SerializeField] private MeshRenderer _renderer;
     [SerializeField] private Texture[] textures;
     [SerializeField] private Mesh[] meshes;
+    [SerializeField] Shake shake;
     private MeshFilter meshFilter;
     int count = 0;
     private float radius = 20f;     // 폭파 반경
     private readonly string bulletTag = "BULLET";
     void Start()
     {
+        shake = Camera.main.GetComponent<Shake>();
         rb = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
         _renderer = GetComponent<MeshRenderer>();
@@ -44,7 +46,7 @@ public class BarrelCtrl : MonoBehaviour
         int idx = Random.Range(0, meshes.Length);
         meshFilter.sharedMesh = meshes[idx];
 
-        Collider[] colls = Physics.OverlapSphere(transform.position, radius, 1 << 13);
+        Collider[] colls = Physics.OverlapSphere(transform.position, radius, 1 << 10);
         // Barrel 위치에서 20 반경에 있는 Barrel 충돌체를 cols 배열에 하나씩 넣는다.
         foreach (Collider coll in colls)
         {
@@ -53,5 +55,7 @@ public class BarrelCtrl : MonoBehaviour
             _rb.AddExplosionForce(120f, transform.position, radius, 50f);
                                     //폭파력, 위치, 반경, 위로 솟는힘
         }
+        shake.shakeRotate = true;
+        StartCoroutine(shake.ShakeCamera(0.3f, 0.25f, 0.03f));
     }
 }

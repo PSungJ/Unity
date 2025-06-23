@@ -7,7 +7,7 @@ public class TPSPlayerInput : MonoBehaviour
     private string moveZAxisName = "Vertical";
     private string moveXAxisName = "Horizontal";
     private string fireButtonName = "Fire1";
-    private string reloadButtonName = "Reload";
+    //private string reloadButtonName = "Reload";
     private string mouseX = "Mouse X";
     // 값 할당은 내부에서 가능
     public float moveZ { get; private set; }     // 감지된 움직임의 입력값
@@ -32,7 +32,7 @@ public class TPSPlayerInput : MonoBehaviour
         moveX = Input.GetAxis(moveXAxisName);
         mouseRotate = Input.GetAxis(mouseX);
         fire = Input.GetButton(fireButtonName) && sprint == false;
-        reload = Input.GetButton(reloadButtonName);
+        //reload = Input.GetButton(reloadButtonName);
         sprint = Input.GetKey(KeyCode.LeftShift) && moveZ >= 0.1f;
     }
 }
