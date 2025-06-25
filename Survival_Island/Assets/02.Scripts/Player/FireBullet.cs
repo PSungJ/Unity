@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//마우스 왼쪽    클릭으로 총알을 발사하는 스크립트
-//뭐가 필요? 1.FirePos 발사위치  2.총알프리팹 3. 오디오소스 오디오클립
+using UnityEngine.EventSystems;
+
 public class FireBullet : MonoBehaviour
 {
-    public Transform FirePos; //총알 발사 위치
-    public AudioClip FireSound; //총알 발사 사운드 클립
-    private AudioSource Source; //오디오 소스 컴포넌트
+    public Transform FirePos;
+    public AudioClip FireSound;
+    private AudioSource Source;
     public Animation ani;
     public ParticleSystem muzzleFlash;
     public ParticleSystem cartridge;
@@ -28,6 +28,8 @@ public class FireBullet : MonoBehaviour
     }
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+        
         if (Input.GetMouseButtonDown(0) && !isReloading && !playerAni.isRunning)
         {
             muzzleFlash.Play();

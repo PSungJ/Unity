@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public GameObject skelPrefab;
-
+    public CanvasGroup inventoryCanvas;
     public List<Transform> spawnList;
     private float timePrev;
     private int maxSkel = 5;
@@ -57,4 +57,16 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+    private bool isPaused;
+    public void OnInventoryClick(bool isOpened)
+    {
+        isPaused = !isPaused;
+        Time.timeScale = (isPaused ? 0f : 1.0f);
+        var playerObj = GameObject.FindGameObjectWithTag("Player");
+        MonoBehaviour[] scripts = playerObj.GetComponents<MonoBehaviour>();
+        foreach (MonoBehaviour script in scripts)
+            script.enabled = !isPaused;
+
+        inventoryCanvas.alpha = (isOpened ? 1.0f : 0f);
+    }   
 }

@@ -375,6 +375,8 @@
 "Assets/02.Scripts/Barrel.cs"
 "Assets/02.Scripts/Common/CensorLight.cs"
 "Assets/02.Scripts/Common/Container.cs"
+"Assets/02.Scripts/Common/Drag.cs"
+"Assets/02.Scripts/Common/Drop.cs"
 "Assets/02.Scripts/Common/EyeTracking.cs"
 "Assets/02.Scripts/Common/GameManager.cs"
 "Assets/02.Scripts/Common/OutLight.cs"
