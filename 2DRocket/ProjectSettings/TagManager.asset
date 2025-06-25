@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Coin
+  - Asteroid
   layers:
   - Default
   - TransparentFX
@@ -40,4 +42,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BGFar
+    uniqueID: 1694799737
+    locked: 0
+  - name: BGNear
+    uniqueID: 1941724687
+    locked: 0
+  - name: Rocket
+    uniqueID: 125034869
+    locked: 0
+  - name: Astroid
+    uniqueID: 1988200157
     locked: 0
