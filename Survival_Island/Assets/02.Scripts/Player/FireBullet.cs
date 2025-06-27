@@ -11,6 +11,7 @@ public class FireBullet : MonoBehaviour
     public Animation ani;
     public ParticleSystem muzzleFlash;
     public ParticleSystem cartridge;
+    private readonly string enemyTag = "ENEMY";
     [Header("Reload")]
     public float reloadTime = 1.5f;
     public int maxBullet = 10;
@@ -18,6 +19,13 @@ public class FireBullet : MonoBehaviour
     public bool isReloading = false;
 
     PlayerControll playerAni;
+
+    private int enemyLayer;
+    private int barrelLayer;
+    private int layerMask;
+    private bool isFire = false;
+    private float nextFire;
+    public float autoFireRate = 0.5f;
     void Start()
     {
         ani = this.transform.GetChild(0).GetChild(0).GetComponent<Animation>();
@@ -25,11 +33,39 @@ public class FireBullet : MonoBehaviour
         muzzleFlash = GetComponentsInChildren<ParticleSystem>()[0];
         cartridge = GetComponentsInChildren<ParticleSystem>()[1];
         playerAni = GetComponent<PlayerControll>();
+
+        enemyLayer = LayerMask.NameToLayer("Enemy");
+        barrelLayer = LayerMask.NameToLayer("Barrel");
+        layerMask = 1 << enemyLayer | 1 << barrelLayer;
     }
     void Update()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return;
-        
+        Debug.DrawRay(FirePos.position, FirePos.forward * 20f, Color.green);
+
+        RaycastHit hit;
+        if (Physics.Raycast(FirePos.position,FirePos.forward, out hit, 20f, layerMask))
+        {
+            isFire = (hit.collider.CompareTag(enemyTag));
+        }
+        else
+        {
+            isFire = false;
+        }
+        if (!isReloading && isFire)
+        {
+            if (Time.time > nextFire)
+            {
+                --curBullet;
+                Fire();
+                if (curBullet == 0)
+                {
+                    StartCoroutine(Reload());
+                }
+                nextFire = Time.time + autoFireRate;
+            }
+        }
+
         if (Input.GetMouseButtonDown(0) && !isReloading && !playerAni.isRunning)
         {
             muzzleFlash.Play();

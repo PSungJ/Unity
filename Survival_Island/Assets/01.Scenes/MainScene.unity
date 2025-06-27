@@ -1657,6 +1657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 409783227}
   - component: {fileID: 409783226}
+  - component: {fileID: 409783228}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1679,6 +1680,10 @@ MonoBehaviour:
   skelPrefab: {fileID: 4686116001626087915, guid: 2b0f8145fcff1cd40a4b697dc677f1fd, type: 3}
   inventoryCanvas: {fileID: 431537208}
   spawnList: []
+  gameData: {fileID: 11400000, guid: 7a821e3bd777a4444873112cbc22b103, type: 2}
+  dataManager: {fileID: 0}
+  slotList: {fileID: 1812350150}
+  itemObjects: []
 --- !u!4 &409783227
 Transform:
   m_ObjectHideFlags: 0
@@ -1694,6 +1699,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &409783228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409783225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a7ec104d3e4b44f8ebb3e90816a956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataPath: 
 --- !u!4 &410103407 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: cd8d56469cf64654eaa21e15c6ae7c18, type: 3}
@@ -9657,6 +9675,7 @@ MonoBehaviour:
   maxBullet: 10
   curBullet: 10
   isReloading: 0
+  autoFireRate: 0.5
 --- !u!114 &1969825420
 MonoBehaviour:
   m_ObjectHideFlags: 0
