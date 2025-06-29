@@ -5,15 +5,16 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class MoveAgent : MonoBehaviour
 {
-    [SerializeField] private List<Transform> wayPointList = new List<Transform>();
-    [SerializeField] private int nextIdx = 0;
-    [SerializeField] private NavMeshAgent navi;
+    public List<Transform>wayPointList = new List<Transform>();
+    public int nextIdx = 0;
+    private NavMeshAgent agent;
     private readonly float patrollSpeed = 1.5f;
     private readonly float traceSpeed = 4.0f;
     private float damping = 1.0f;
-    private Transform EnemyTr;
-    private bool _patrolling;   // 순찰여부
-    public bool patrolling
+    private Transform enemyTr;
+
+    private bool _patrolling; //순찰 여부를 판단
+    public bool patrolling //프로퍼티 
     {
         get { return _patrolling; }
         set
@@ -21,8 +22,8 @@ public class MoveAgent : MonoBehaviour
             _patrolling = value;
             if(_patrolling)
             {
-                navi.speed = patrollSpeed;
-                damping = 1.0f; // 순찰 할 때 회전 계수
+                agent.speed = patrollSpeed;
+                damping = 1f;//순찰 할때 회전 계수 
             }
         }
     }
@@ -33,41 +34,40 @@ public class MoveAgent : MonoBehaviour
         set
         {
             _traceTarget = value;
-            navi.speed = traceSpeed;
+            agent.speed = traceSpeed;
             TraceTarget(_traceTarget);
-            damping = 7.0f; // 추적 할 때 회전 계수
+            damping = 7f;//추적 할때 회전 계수 
         }
     }
-    public float speed
-    {
-        get { return navi.velocity.magnitude; }
-    }
+    public float speed { get { return agent.velocity.magnitude; } }
+
     void TraceTarget(Vector3 pos)
     {
-        if (navi.isPathStale) return;
-        navi.destination = pos;
-        navi.isStopped = false;
+        if (agent.isPathStale) return;
+        agent.destination = pos;
+        agent.isStopped = false;
+
     }
     public void Stop()
     {
-        navi.isStopped = true;  // 추적 중지
-        navi.velocity = Vector3.zero;   // 캐릭터가 멈춤
-        _patrolling = false;
+        agent.isStopped =true; //추적중지
+        agent.velocity = Vector3.zero;  //캐릭터가 멈춤
+        _patrolling=false;
+
     }
     void Start()
     {
-        #region 웨이포인트 List잡는방법 1
-        //Transform[] wayPoints = GameObject.Find("WayPointGroup").GetComponentsInChildren<Transform>();
-        //if (wayPoints != null)
+        #region  웨이포인트 위치 잡는 방법1
+        //Transform[] wayPoints =GameObject.Find("WayPointGroup").GetComponentsInChildren<Transform>();
+        //if (wayPoints != null )
         //{
-        //    foreach (Transform point in wayPoints)
+        //    foreach (Transform point in wayPoints) 
         //        wayPointList.Add(point);
 
         //    wayPointList.RemoveAt(0);
         //}
         #endregion
-
-        #region 웨이포인트 List잡는방법 2
+        #region  웨이포인트 위치 잡는 방법2
         var group = GameObject.Find("WayPointGroup");
         if (group != null)
         {
@@ -76,35 +76,45 @@ public class MoveAgent : MonoBehaviour
             nextIdx = Random.Range(0, wayPointList.Count);
         }
         #endregion
-        navi = GetComponent<NavMeshAgent>();
-        navi.autoBraking = false;
-        navi.updateRotation = false;    // 에이전트에서 회전하는 기능 비활성화
-        navi.speed = patrollSpeed;
+        agent =GetComponent<NavMeshAgent>();
+        agent.autoBraking = false;
+        agent.updateRotation = false; //에이전트에서 회전하는 기능 비활성화
+        agent.speed = patrollSpeed;
+        enemyTr = GetComponent<Transform>();
         this._patrolling = true;
-        EnemyTr = GetComponent<Transform>();
     }
-    void MoveWayPoint()
+    void MovWayPoint()
     {
-        // 최단 경로계산이 끝나지 않으면 다음을 수행하지 않는다.
-        if (navi.isPathStale) return;
-        navi.destination = wayPointList[nextIdx].position;
-        navi.isStopped = false;
+        //최단 경로계산이 끝나지 않으면  다음 수행 하지 않는다.
+        if (agent.isPathStale) return;
+        //추적 대상은      =  패트롤 위치를 갖고 있는 wayPointList 배열의 인덱스
+        agent.destination = wayPointList[nextIdx].position;
+        agent.isStopped = false; //추적 활성화 
+
     }
 
-    void FixedUpdate()
-    {
-        if (navi.isStopped == false)
-        {   // NavMeshAgent가 가야할 방향 벡터를 Quaternion 타입의 각도로 변환
-            Quaternion rot = Quaternion.LookRotation(navi.desiredVelocity);
-            EnemyTr.rotation = Quaternion.Slerp(EnemyTr.rotation, rot, Time.deltaTime * damping);
+    void Update()
+    {      //적캐릭터가 이동중이라면 
+        if(agent.isStopped ==false&& agent.desiredVelocity !=Vector3.zero)
+        {    //NavMeshAgent가 가야할 방향 벡터를 쿼터니언 타입의 각도로 변환 
+          
+             Quaternion rot = Quaternion.LookRotation(agent.desiredVelocity);
+            //곡면보간 함수를 이용해서 점진적으로 부드럽게 회전 시킴 
+            
+              enemyTr.rotation = Quaternion.Slerp(enemyTr.rotation, rot ,Time.deltaTime *damping);
+                             
         }
+
+
         if (!_patrolling) return;
 
-        if (navi.remainingDistance <= 0.5f)
+        if(agent.remainingDistance <= 0.5f)
         {
-            //nextIdx = ++nextIdx % wayPointList.Count;
-            nextIdx = Random.Range(0, wayPointList.Count);
-            MoveWayPoint();
+
+           //nextIdx = ++nextIdx % wayPointList.Count;
+           nextIdx = Random.Range(0,wayPointList.Count);
+            MovWayPoint() ;
         }
+        
     }
 }

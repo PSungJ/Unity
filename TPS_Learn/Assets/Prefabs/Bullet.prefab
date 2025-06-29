@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6779444427852842556
+--- !u!1 &488146190846036611
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 750727899297107840}
-  - component: {fileID: 8471860786696088215}
-  - component: {fileID: 4311382826791451491}
-  - component: {fileID: 8947273462400255119}
-  - component: {fileID: 2395108676497953089}
-  m_Layer: 8
+  - component: {fileID: 6615949091457841527}
+  - component: {fileID: 8064329428946341135}
+  - component: {fileID: 5443058175160748693}
+  - component: {fileID: 7164862973991446206}
+  - component: {fileID: 7750772746020492282}
+  m_Layer: 11
   m_Name: Bullet
   m_TagString: BULLET
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &750727899297107840
+--- !u!4 &6615949091457841527
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6779444427852842556}
+  m_GameObject: {fileID: 488146190846036611}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.96, y: 0.914, z: 1.454}
+  m_LocalPosition: {x: 0.15162715, y: 0.575, z: 13.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8751809862829228571}
+  - {fileID: 6893717721006454360}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!96 &8471860786696088215
+--- !u!96 &8064329428946341135
 TrailRenderer:
   serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6779444427852842556}
+  m_GameObject: {fileID: 488146190846036611}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -57,7 +57,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fbe6661011bd7994c9685c0538b6e36b, type: 2}
+  - {fileID: 2100000, guid: 7ed90b3804294634181a9a1fe77ba42b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,8 +87,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0020103455
-        value: 0.043861456
+        time: 0.035597373
+        value: 0.08210066
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -96,26 +96,8 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.08817615
-        value: 0.09822081
-        inSlope: 0.61652374
-        outSlope: 0.61652374
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 1
-      - serializedVersion: 3
-        time: 0.1810894
-        value: 0.14474273
-        inSlope: 0.91252226
-        outSlope: 0.91252226
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.89258724
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.34809065
-        value: 0.18859273
+        time: 0.31068122
+        value: 0.20894897
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -123,8 +105,8 @@ TrailRenderer:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.5452737
-        value: 0.18859087
+        time: 0.52751094
+        value: 0.22388321
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -132,17 +114,8 @@ TrailRenderer:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.752513
-        value: 0.10088201
-        inSlope: -0.40041623
-        outSlope: -0.40041623
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.65333825
-      - serializedVersion: 3
-        time: 0.9034205
-        value: 0.06140351
+        time: 0.81875914
+        value: 0.13432337
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -150,8 +123,8 @@ TrailRenderer:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 0
+        time: 0.98058116
+        value: 0.02984915
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -203,13 +176,13 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!54 &4311382826791451491
+--- !u!54 &5443058175160748693
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6779444427852842556}
+  m_GameObject: {fileID: 488146190846036611}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -230,13 +203,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &8947273462400255119
+--- !u!135 &7164862973991446206
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6779444427852842556}
+  m_GameObject: {fileID: 488146190846036611}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -251,30 +224,29 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.035
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2395108676497953089
+--- !u!114 &7750772746020492282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6779444427852842556}
+  m_GameObject: {fileID: 488146190846036611}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb1a59a9c5c95842a920825192544e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 454d95946b01e554292d52d2b48afdb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spCol: {fileID: 0}
+  speed: 2500
   rb: {fileID: 0}
+  s_col: {fileID: 0}
   tr: {fileID: 0}
-  trail: {fileID: 0}
-  damage: 10
---- !u!1001 &8751809862829365403
+--- !u!1001 &6893717721006058712
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 750727899297107840}
+    m_TransformParent: {fileID: 6615949091457841527}
     m_Modifications:
     - target: {fileID: 100000, guid: f3be3666e308d450f8cc9ad434580302, type: 3}
       propertyPath: m_Name
@@ -282,7 +254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: f3be3666e308d450f8cc9ad434580302, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f3be3666e308d450f8cc9ad434580302, type: 3}
       propertyPath: m_LocalPosition.x
@@ -337,8 +309,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3be3666e308d450f8cc9ad434580302, type: 3}
---- !u!4 &8751809862829228571 stripped
+--- !u!4 &6893717721006454360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f3be3666e308d450f8cc9ad434580302, type: 3}
-  m_PrefabInstance: {fileID: 8751809862829365403}
+  m_PrefabInstance: {fileID: 6893717721006058712}
   m_PrefabAsset: {fileID: 0}

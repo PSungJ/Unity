@@ -245,9 +245,6 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths:
-    - mutant_mesh
-    - mutant_meshLod1
-    - mutant_meshLod2
     - pelvis/stomach/Ribs/chest/neck/head
     - pelvis/stomach/Ribs/chest/Rshoulder/Rarm/Rforearm/Rwrist/Rweaponholder
     extraUserProperties: []

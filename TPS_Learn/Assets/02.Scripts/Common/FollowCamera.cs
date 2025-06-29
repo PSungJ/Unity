@@ -5,30 +5,23 @@ using UnityEngine;
 public class FollowCamera : MonoBehaviour
 {
     [SerializeField] Transform target;
-    [SerializeField] private float moveDamping = 15f;
-    [SerializeField] private float rotateDamping = 10f;
-    [SerializeField] private float distance = 5f;
-    [SerializeField] private float height = 4f;
-    [SerializeField] private float targetOffset = 2f;
+    [SerializeField] float moveDamping = 15.0f;
+    [SerializeField] float rotateDamping = 10f;
+    [SerializeField] float distance = 5f;
+    [SerializeField] float height = 4.0f;
+    [SerializeField] float targetOffset = 2.0f;
     private Transform tr;
+    
     void Start()
     {
         tr = transform;
     }
-
-    void LateUpdate()   // Update나 FixedUpdate가 먼저 호출된 이후 호출된다.
+    void LateUpdate()//Update나 FixedUpdate 먼저 이동이 되고 따라 가야 할때
     {
-        var camPos = target.position - (Vector3.forward * distance) + (Vector3.up * height);
-        tr.position = Vector3.Slerp(tr.position, camPos, Time.deltaTime * moveDamping);
-        tr.rotation = Quaternion.Slerp(tr.rotation, target.rotation, Time.deltaTime * rotateDamping);
-        tr.LookAt(target.position + (Vector3.up * targetOffset));
+        var Campos = target.position -(Vector3.forward * distance)+(Vector3.up * height);
+        tr.position = Vector3.Slerp(tr.position, Campos, Time.deltaTime * moveDamping);
+        tr.rotation = Quaternion.Slerp(tr.rotation,target.rotation, Time.deltaTime * rotateDamping);
+        tr.LookAt(target.position+ (Vector3.up *targetOffset));
     }
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.green;
-    //    // 추적 및 시야를 맞출 위치를 표시
-    //    Gizmos.DrawWireSphere(target.position + (Vector3.up * targetOffset), 0.1f);
-    //    // 씬화면에서 선을 그린다.
-    //    Gizmos.DrawLine(target.position + (Vector3.up * targetOffset), tr.position);
-    //}
+    
 }

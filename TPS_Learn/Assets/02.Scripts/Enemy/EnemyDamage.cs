@@ -1,21 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent (typeof(CapsuleCollider))]
 public class EnemyDamage : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem blood;
-    [SerializeField] private EnemyAi EnemyAi;
-    private float hp;
-    private float maxHp = 100f;
-
+    [SerializeField] ParticleSystem blood;
     private readonly string bulletTag = "BULLET";
+    private float InitHp = 100f;
+    private float hp = 100f;
+    private EnemyAI enemyAI;
+    private void OnEnable()
+    {
+        hp = 100f;
+    }
     void Start()
     {
-        hp = maxHp;
-        EnemyAi = GetComponent<EnemyAi>();
+        enemyAI = GetComponent<EnemyAI>();
         blood.Stop();
     }
     private void OnCollisionEnter(Collision col)
@@ -25,12 +27,14 @@ public class EnemyDamage : MonoBehaviour
             col.gameObject.SetActive(false);
             blood.Play();
             hp -= col.gameObject.GetComponent<BulletCtrl>().damage;
-            //Mathf.Clamp(maxHp, 0, 100);
-
-            if (hp <= 0)
+            enemyAI.hpBarImage.fillAmount = hp / InitHp;
+            if (hp <= 0f)
             {
-                EnemyAi.Die();
+                GetComponent<EnemyAI>().Die();
+                
             }
+                
         }
     }
+    
 }

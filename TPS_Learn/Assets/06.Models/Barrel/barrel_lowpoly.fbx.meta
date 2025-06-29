@@ -18,12 +18,20 @@ ModelImporter:
   - first:
       43: 4300000
     second: Barrel
-  externalObjects: {}
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: 18e546855ef404cda9c874f51fbad17f, type: 2}
   materials:
-    materialImportMode: 2
-    materialName: 1
-    materialSearch: 2
-    materialLocation: 0
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -50,12 +58,12 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1.5
+    globalScale: 1.2
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importPhysicalCameras: 1
+    importPhysicalCameras: 0
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
@@ -63,7 +71,7 @@ ModelImporter:
     nodeNameCollisionStrategy: 0
     fileIdsGeneration: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
@@ -87,7 +95,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 4
+    tangentImportMode: 0
     normalCalculationMode: 0
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
     blendShapeNormalImportMode: 1
@@ -105,7 +113,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1.4999998
+    globalScale: 1.1999999
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

@@ -1,72 +1,169 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-// 필요한것 : 1. 총알프리팹, 2. 발사위치, 3. 발사타이밍 시간조절, 4. 파티클이펙트, 5. 사운드
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+[System.Serializable]
+public struct PlayerSfx
+{
+    public AudioClip[] fire;
+    public AudioClip[] reload;
+}
+//Scriptable 스크립터블 
+
 public class TPSFire : MonoBehaviour
 {
-    private readonly int hashReload = Animator.StringToHash("Reload");
-    [SerializeField] private Transform firePos;
-    [SerializeField] private AudioSource source;
-    [SerializeField] private AudioClip fireSound;
-    [SerializeField] private AudioClip reloadSfx;
-    //[SerializeField] private ParticleSystem cartrige;
-    [SerializeField] private ParticleSystem muzzleFlash;
-    [SerializeField] private Animator ani;
+    public enum WeaponType
+    {
+      RIFLE=0,SHOTGUN=1
+    }
+    public WeaponType curweapon = WeaponType.RIFLE;
+    public PlayerSfx playerSfx;
+    [SerializeField]
+    private Transform firePos;
+    [SerializeField]
+    private AudioSource source;
+    [SerializeField]
+    private AudioClip fireClip;
+    [SerializeField] private Animator animator;
+    [SerializeField]
+    private ParticleSystem cartrige;
+    [SerializeField]
+    private ParticleSystem muzzleFlash;
+    [SerializeField]
+    TPSPlayerInput input;
+    [SerializeField]
+    TPSMecanimCtrl tpsctrl;
     private float fireRate = 0.1f;
     private float timePrev;
-    private TPSPlayerInput input;
 
-    private readonly float reloadTime = 2.0f;
-    private readonly int maxBullet = 10;
-    private int curBullet = 10;
-    private bool isReload = false;
-    private WaitForSeconds wsReload;
+    //탄창 이미지 UI
+    public Image magazineImg;
+    public Text magazinetxt;
+    public int maxBullet = 10; //최대총알수 
+    public int remainingBullet = 10;// 남은 총알수 
+
+    //public float reloadTime = 2.0f;
+    private bool isReloading = false;
+    private WaitForSeconds reloadWs;
+
+    private readonly int hashReload = Animator.StringToHash("Reload");
+    private readonly string enemyTag = "ENEMY";
+
+    public Sprite[] weaponIcons;
+    public Image weaponImg;
+
+    public RifleGunData rifleGunData;
+    public ShotGunData shotGunData;
+
+    // 적 캐릭터의 레이어값을 저장할 변수
+    private int enemyLayer;
+    private int barrelLayer;
+    private int obstacleLayer;
+    private int layerMask;
+    private bool isFire = false;
+    private float nextFire;
+    public float autoFireRate = 0.1f;
     void Start()
     {
+        animator = GetComponent<Animator>();
         source = GetComponent<AudioSource>();
         input = GetComponent<TPSPlayerInput>();
-        ani = GetComponent<Animator>();
+        tpsctrl = GetComponent<TPSMecanimCtrl>();
         muzzleFlash = firePos.GetComponentInChildren<ParticleSystem>();
-        timePrev = Time.time;
-        wsReload = new WaitForSeconds(reloadTime);
-    }
+        reloadWs = new WaitForSeconds(2f);
 
+        enemyLayer = LayerMask.NameToLayer("ENEMY");
+        barrelLayer = LayerMask.NameToLayer("BARREL");
+        obstacleLayer = LayerMask.NameToLayer("Obstacle");
+        layerMask = 1 << enemyLayer | 1 << barrelLayer | 1 << obstacleLayer;
+    }
     void Update()
     {
-        if (input.fire && !isReload)
+        Debug.DrawRay(firePos.position, firePos.forward * 20f, Color.green);
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+        // 버튼에 닿았다면  하위 경로로 내려가지 않고 빠져나감 이벤트 훅 
+
+        RaycastHit hit;
+        if (Physics.Raycast(firePos.position, firePos.forward, out hit, 20f, layerMask))
         {
-            if (Time.time - timePrev > fireRate)
+            isFire = (hit.collider.CompareTag(enemyTag));
+        }
+        else
+        {
+            isFire = false;
+        }
+        if (!isReloading && isFire)
+        {
+            if (Time.time > nextFire)
+            {
+                --remainingBullet;
+                Fire();
+                if(remainingBullet == 0)
+                {
+                    StartCoroutine(Reloading());
+                }
+                nextFire = Time.time + autoFireRate;
+            }
+        }
+
+        if (!isReloading && input.fire && tpsctrl.isRun == false)
+
+        {
+            if (Time.time - timePrev >= rifleGunData.fireRate)
             {
                 timePrev = Time.time;
+                --remainingBullet;
                 Fire();
+                if (remainingBullet == 0)
+                {
+                    StartCoroutine(Reloading());
+                }
             }
         }
     }
-
-    private void Fire()
+    IEnumerator Reloading()
     {
-        //Instantiate(BulletPrefab, firePos.position, firePos.rotation);
-        var _bullet = PoolingManager.p_Instance.GetBullet();
+        isReloading = true;
+        source.PlayOneShot(rifleGunData.reloadClip, rifleGunData.reloadTime);
+        animator.SetTrigger(hashReload);
+
+        yield return reloadWs;
+
+        isReloading=false;
+        magazineImg.fillAmount = 1.0f;
+        remainingBullet = maxBullet;
+
+        UpdateBulletText();
+    }
+    void UpdateBulletText()
+    {      
+        //남은 총알수  최대 총알수 표시 
+        magazinetxt.text = string.Format($"<color=ff0000>{remainingBullet}</color>/{maxBullet}");
+    }
+
+    void Fire()
+    {   //프리팹 생성 함수( 무엇을 , 어디서 ,어떻게 회전 할것인가)
+        //Instantiate(bulletPrefab,firePos.position,firePos.rotation);
+        if (isReloading) return;
+        var _bullet = PoolingManager.p_instance.GetBullet();
         if (_bullet != null)
         {
             _bullet.transform.position = firePos.position;
             _bullet.transform.rotation = firePos.rotation;
             _bullet.SetActive(true);
-        }
-        source.PlayOneShot(fireSound, 1f);
-        //cartrige.Play();
-        muzzleFlash.Play();
-        isReload  = (--curBullet % maxBullet == 0);
-        if (isReload)
-            StartCoroutine(Reloading());
-    }
-    IEnumerator Reloading()
-    {
-        ani.SetTrigger(hashReload);
-        source.PlayOneShot(reloadSfx, 1f);
-        yield return wsReload;
 
-        curBullet = maxBullet;
-        isReload = false;
+
+        }
+        source.PlayOneShot(rifleGunData.shotClip, 1.0f);
+        cartrige.Play();
+        muzzleFlash.Play();
+
+        magazineImg.fillAmount =(float)remainingBullet /(float)maxBullet;
+        UpdateBulletText();
+    }
+    public void OnChageWeapon()
+    {
+        curweapon=(WeaponType)((int)++curweapon%2);
+        weaponImg.sprite = weaponIcons[(int)curweapon%2];
     }
 }

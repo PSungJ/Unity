@@ -319,30 +319,30 @@ ModelImporter:
     extraExposedTransformPaths:
     - pelvis/stomach/Ribs/chest/Rshoulder/Rarm/Rforearm/Rwrist/Rweaponholder
     - pelvis
-    - pelvis/Lthigh
-    - pelvis/Lthigh/Lcalf
-    - pelvis/Lthigh/Lcalf/Lfoot
-    - pelvis/Rthigh
-    - pelvis/Rthigh/Rcalf
-    - pelvis/Rthigh/Rcalf/Rfoot
     - pelvis/stomach
     - pelvis/stomach/Ribs
     - pelvis/stomach/Ribs/chest
+    - pelvis/stomach/Ribs/chest/neck
+    - pelvis/stomach/Ribs/chest/neck/head
+    - pelvis/stomach/Ribs/chest/neck/head/Hat_Target
     - pelvis/stomach/Ribs/chest/Lshoulder
     - pelvis/stomach/Ribs/chest/Lshoulder/Larm
     - pelvis/stomach/Ribs/chest/Lshoulder/Larm/Lforearm
     - pelvis/stomach/Ribs/chest/Lshoulder/Larm/Lforearm/Lwrist
-    - pelvis/stomach/Ribs/chest/Lshoulder/Larm/Lforearm/Lwrist/Lfingers
     - pelvis/stomach/Ribs/chest/Lshoulder/Larm/Lforearm/Lwrist/Lthumb
-    - pelvis/stomach/Ribs/chest/neck
-    - pelvis/stomach/Ribs/chest/neck/head
-    - pelvis/stomach/Ribs/chest/neck/head/Hat_Target
+    - pelvis/stomach/Ribs/chest/Lshoulder/Larm/Lforearm/Lwrist/Lfingers
     - pelvis/stomach/Ribs/chest/Rshoulder
     - pelvis/stomach/Ribs/chest/Rshoulder/Rarm
     - pelvis/stomach/Ribs/chest/Rshoulder/Rarm/Rforearm
     - pelvis/stomach/Ribs/chest/Rshoulder/Rarm/Rforearm/Rwrist
     - pelvis/stomach/Ribs/chest/Rshoulder/Rarm/Rforearm/Rwrist/Rfingers
     - pelvis/stomach/Ribs/chest/Rshoulder/Rarm/Rforearm/Rwrist/Rthumb
+    - pelvis/Lthigh
+    - pelvis/Lthigh/Lcalf
+    - pelvis/Lthigh/Lcalf/Lfoot
+    - pelvis/Rthigh
+    - pelvis/Rthigh/Rcalf
+    - pelvis/Rthigh/Rcalf/Rfoot
     - slade_mesh
     - slade_meshLod1
     - slade_meshLod2
