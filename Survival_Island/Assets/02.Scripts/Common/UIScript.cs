@@ -13,7 +13,9 @@ public class UIScript : MonoBehaviour
     }
     public void PlaySceneMove()
     {
-        SceneManager.LoadScene("MainScene");
+        //SceneManager.LoadScene("LevelScene");
+        //SceneManager.LoadScene("MainScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("FadeInScene"); 
     }
     public void QuitGame()
     {
