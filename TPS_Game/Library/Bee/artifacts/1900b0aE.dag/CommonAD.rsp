@@ -360,7 +360,9 @@
 "Assets/02.Scripts/Common/GameManager.cs"
 "Assets/02.Scripts/Common/MyGizmos.cs"
 "Assets/02.Scripts/Common/PoolingManager.cs"
+"Assets/02.Scripts/Common/SceneLoader.cs"
 "Assets/02.Scripts/Common/Shake.cs"
+"Assets/02.Scripts/Common/UIManager.cs"
 -langversion:9.0
 /deterministic
 /optimize+
