@@ -1,0 +1,4 @@
+<Layer 설정값>
+6 : PLAYER
+7 : SWORD
+8 : SHIELD
