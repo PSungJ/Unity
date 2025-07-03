@@ -1,0 +1,120 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+// 1. Wheel Collider : 바닥 마찰로 이동, 2. Wheel Models : 모델링은 WheelCollider와 같이 회전
+public class PlayerCar : MonoBehaviour
+{
+    [SerializeField] private Rigidbody rb;
+    private readonly string hori = "Horizontal";
+    private readonly string ver = "Vertical";
+
+    [Header("WheelCollider")]
+    public WheelCollider frontL, frontR, backL, backR;
+
+    [Header("WheelModels")]
+    public Transform frontL_M, frontR_M, backL_M, backR_M;
+
+    [Header("CenterOfMass")]
+    public Vector3 comPos = new Vector3(0f, -0.5f, 0f); // vichicle은 무조건 중심이 있어야함
+
+    [Header("차량 움직임")]
+    [SerializeField] private float maxSteerAngle = 35f;     // 최대 조향각
+    [SerializeField] private float maxTorque = 2500f;       // 가속력
+    [SerializeField] private float maxBrake = 3500f;        // 감속력
+    [SerializeField] private float maxSpeed = 200f;         // 최대속도
+    [SerializeField] private float curSpeed = 0f;           // 현재속도
+
+    private float Steer = 0f;       //A,D 키값을 받기 위한 변수
+    private float forward = 0f;     //W 키값을 받기 위한 변수
+    private float back = 0f;        //S 키값을 받기 위한 변수
+    private bool reverse = false;   //후진 여부 체크
+    private float motor = 0f;       //차량의 모터토크를 저장
+    private float brake = 0f;       //차량의 브레이크 토크 저장
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        if(rb != null )
+            rb.centerOfMass = comPos;
+    }
+    private void FixedUpdate()
+    {
+        curSpeed = rb.velocity.sqrMagnitude;
+
+        // 뒷바퀴 콜라이더 회전
+        backL.motorTorque = maxTorque * motor;
+        backR.motorTorque = maxTorque * motor;
+        // 앞바퀴 콜라이더 좌우 각도
+        frontL.steerAngle = maxSteerAngle * Steer;
+        frontR.steerAngle = maxSteerAngle * Steer;
+        // 브레이크 감속
+        backL.brakeTorque = maxBrake * brake;
+        backR.brakeTorque = maxBrake * brake;
+    }
+    private void Update()
+    {
+        CarMovement();
+    }
+    private void LateUpdate()
+    {
+        // 앞바퀴 모델 좌우 움직임
+        frontL_M.localEulerAngles = new Vector3(frontL.transform.localEulerAngles.x, Steer * maxSteerAngle, frontL.transform.localEulerAngles.z);
+        frontR_M.localEulerAngles = new Vector3(frontR.transform.localEulerAngles.x, Steer * maxSteerAngle, frontR.transform.localEulerAngles.z);
+        // 앞바퀴 모델 회전
+        frontL_M.Rotate(frontL.rpm * Time.deltaTime, 0f, 0f);
+        frontR_M.Rotate(frontR.rpm * Time.deltaTime, 0f, 0f);
+        // 뒷바퀴 모델 회전
+        backL_M.Rotate(backL.rpm * Time.deltaTime, 0f, 0f);
+        backR_M.Rotate(backR.rpm * Time.deltaTime, 0f, 0f);
+    }
+    private void CarMovement()
+    {
+        Steer = Input.GetAxis(hori);
+        forward = Mathf.Clamp(Input.GetAxis(ver), 0f, 1f);   // W키값만 받는다.
+        back = -1f * Mathf.Clamp(Input.GetAxis(ver), -1f, 0f);   // S키값만 받는다.
+
+        if (Input.GetKey(KeyCode.W))
+            StartCoroutine(ForwardCar());
+        else if (Input.GetKey(KeyCode.S))
+            StartCoroutine(BackwardCar());
+
+        if (reverse)    // 후진 중이라면
+        {
+            motor = -1f * back;
+            brake = forward;
+        }
+        else
+        {
+            motor = forward;
+            brake = back;
+        }
+    }
+    IEnumerator ForwardCar()
+    {
+        yield return new WaitForSeconds(0.01f);
+        curSpeed = 0.1f;
+        if(back > 0f)
+            reverse = true;
+        else
+            reverse = false;
+    }
+    IEnumerator BackwardCar()
+    {
+        yield return new WaitForSeconds(0.01f);
+        curSpeed = 0.1f;
+        if (back > 0f)
+            reverse = true;
+        else
+            reverse = false;
+    }
+    public void CarStop()
+    {
+        frontL.motorTorque = 0f;
+        frontR.motorTorque = 0f;
+        backL.motorTorque = 0f;
+        backR.motorTorque = 0f;
+        frontL.brakeTorque = maxBrake * brake;
+        frontR.brakeTorque = maxBrake * brake;
+        backL.brakeTorque = maxBrake * brake;
+        backR.brakeTorque = maxBrake * brake;
+    }
+}
