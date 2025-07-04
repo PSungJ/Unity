@@ -18,6 +18,7 @@ public class AICar : MonoBehaviour
 
     [SerializeField] private Rigidbody rb;
     public float maxSpeed = 80f;
+    private float preTime = 0f;
     void Start()
     {
         Initialize();
@@ -27,6 +28,7 @@ public class AICar : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         if (rb != null)
             rb.centerOfMass = comPos;
+        preTime = Time.time;
 
         var pathArray = GameObject.Find("PathPoint").transform;
         if (pathArray != null)
@@ -37,9 +39,12 @@ public class AICar : MonoBehaviour
     }
     void FixedUpdate()
     {
-        ApplySteer();
-        Drive();
-        CheckWayPointDistance();
+        if (Time.time - preTime >= 10f)
+        {
+            ApplySteer();
+            Drive();
+            CheckWayPointDistance();
+        }
     }
     void ApplySteer()   // 앞바퀴가 경로를 따라 회전
     {

@@ -14,29 +14,39 @@ public class PlayerCar : MonoBehaviour
     [SerializeField] private float emsBrakeForce = 8000f;  // 비상브레이크 토크
 
     [Header("Car CurrnetSpeed")]
-    [SerializeField] private float curSpeed = 0f;           // 현재속도
+    [SerializeField] public float curSpeed = 0f;           // 현재속도
 
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private GameObject fpsPlayer;
+    [SerializeField] private bool isInCar = false;
+    [SerializeField] private Transform playerTr;
+    [SerializeField] private Transform tr;
+    [SerializeField] private Transform getOutPos;
     private readonly string hori = "Horizontal";
     private readonly string ver = "Vertical";
 
     private float SteerInput = 0f;       //A,D 키값을 받기 위한 변수
-    private float MotorInput = 0f;       //W,S 키값을 받기 위한 변수
-    private bool isEmsBraking = false;
+    public float MotorInput = 0f;       //W,S 키값을 받기 위한 변수
+    public bool isEmsBraking = false;
     void Start()
     {
         Initialize();
     }
     private void Initialize()
     {
+        tr = GetComponent<Transform>();
         rb = GetComponent<Rigidbody>();
         if (rb != null)
             rb.centerOfMass = comPos;
+        isInCar = false;
     }
     private void FixedUpdate()
     {
-        HandleMotor();
-        HandleSteering();
+        if (isInCar)
+        {
+            HandleMotor();
+            HandleSteering();
+        }
     }
     private void HandleMotor()
     {
@@ -75,6 +85,7 @@ public class PlayerCar : MonoBehaviour
     }
     private void Update()
     {
+        GetInCar();
         CarInput();
         curSpeed = rb.velocity.magnitude * 3.6f;    // m/s를 km/h로 변환
     }
@@ -98,5 +109,24 @@ public class PlayerCar : MonoBehaviour
         col.GetWorldPose(out pos, out rot); // 휠 콜라이더의 위치와 회전값을 가져옴
         model.position = pos;
         model.rotation = rot;
+    }
+    void GetInCar()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            float dist = Vector3.Distance(tr.transform.position, playerTr.transform.position);
+            if (!isInCar && dist <= 3)
+            {
+                isInCar = true;
+                fpsPlayer.SetActive(false);
+                playerTr.position = tr.position;
+            }
+            else if (isInCar)
+            {
+                isInCar = false;
+                fpsPlayer.SetActive(true);
+                playerTr.position = getOutPos.position;
+            }
+        }
     }
 }
