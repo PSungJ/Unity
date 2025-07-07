@@ -371,8 +371,14 @@
 "Assets/09.Scripts/Common/HealthPack.cs"
 "Assets/09.Scripts/Common/I_Damageable.cs"
 "Assets/09.Scripts/Common/I_Item.cs"
+"Assets/09.Scripts/Common/LivingEntity.cs"
+"Assets/09.Scripts/Common/MyGizmos.cs"
+"Assets/09.Scripts/Common/ZombieData.cs"
+"Assets/09.Scripts/Enemy/Zombie.cs"
+"Assets/09.Scripts/Player/WomanHealth.cs"
 "Assets/09.Scripts/Player/WomanInput.cs"
 "Assets/09.Scripts/Player/WomanMovement.cs"
+"Assets/09.Scripts/Player/WomanShooter.cs"
 -langversion:9.0
 /deterministic
 /optimize+
