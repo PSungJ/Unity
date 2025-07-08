@@ -46,7 +46,10 @@ public class WomanShooter : MonoBehaviour
     }
     void UpdateUI()
     {
-        // 총알 UI 업데이트
+        if (gun != null && UIManager.UI_instance != null)
+        {
+            UIManager.UI_instance.UpdateAmmoText(gun.magAmmo, gun.ammoRemain);
+        }
     }
     private void OnAnimatorIK(int layerIndex)
     {

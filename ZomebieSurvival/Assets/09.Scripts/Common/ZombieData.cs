@@ -7,6 +7,6 @@ public class ZombieData : ScriptableObject
 {
     public float health = 100f;
     public float damage = 20f;
-    public float speed = 3f;
+    public float speed = 2f;
     public Color skinColor = Color.white;
 }

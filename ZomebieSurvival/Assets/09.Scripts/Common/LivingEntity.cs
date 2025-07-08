@@ -32,12 +32,12 @@ public class LivingEntity : MonoBehaviour, I_Damageable
     }
     public virtual void Die()
     {
-        dead = true;
         if (onDeath != null)    // onDeath 이벤트가 구독되어 있다면
         {
             onDeath();  // 이벤트 호출
         }
-        gameObject.SetActive(false);    // 게임오브젝트 비활성화
+        dead = true;
+        //gameObject.SetActive(false);    // 게임오브젝트 비활성화
     }
 
 }

@@ -14,7 +14,7 @@ public class Zombie : LivingEntity
     private AudioSource source;
     public AudioClip hitClip;
     public AudioClip deathClip;
-    private MeshRenderer meshRenderer;
+    private SkinnedMeshRenderer meshRenderer;
     private Animator ani;
 
     public float damage = 20f;
@@ -42,14 +42,12 @@ public class Zombie : LivingEntity
         agent = GetComponent<NavMeshAgent>();
         source = GetComponent<AudioSource>();
         ani = GetComponent<Animator>();
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
     public void SetUp(ZombieData zombieData) // 좀비 AI 초기 스펙 설정값 메서드
     {
         startingHealth = zombieData.health; // 초기 체력 설정
-        health = startingHealth;            // 현재 체력 초기화
-
         damage = zombieData.damage;     // 공격력 설정
         agent.speed = zombieData.speed; // 이동속도 설정
         meshRenderer.material.color = zombieData.skinColor; // 색상 설정
@@ -105,10 +103,9 @@ public class Zombie : LivingEntity
     }
     public override void Die()
     {
-        base.Die();
-        // 다른 AI를 방해하지 않도록 자신의 모든 콜라이도 비활성화
+        // 다른 AI를 방해하지 않도록 자신의 모든 콜라이더 비활성화
         Collider[] zomebieColliders = GetComponents<Collider>();
-        for (int i = 0; i <= zomebieColliders.Length; i++)
+        for (int i = 0; i < zomebieColliders.Length; i++)
         {
             zomebieColliders[i].enabled = false;    // 좀비의 모든 콜라이더 비활성화
         }
@@ -116,6 +113,7 @@ public class Zombie : LivingEntity
         agent.enabled = false;
         ani.SetTrigger(hashDie);
         source.PlayOneShot(deathClip);
+        base.Die();
     }
     public void OnTriggerStay(Collider other)   // 트리거 안에 있을 때 특정 기능 유지
     {

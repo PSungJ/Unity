@@ -22,7 +22,7 @@ public class WomanInput : MonoBehaviour
  
     void Update()
     {
-        if (GameManager.Instance != null && GameManager.Instance.isGameOver)
+        if (GameManager.instance != null && GameManager.instance.isGameOver)
         {
             moveZ = 0f;
             moveX = 0f;
