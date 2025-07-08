@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChangeWeapon : MonoBehaviour
 {
     private SkinnedMeshRenderer Spas12;
-    private MeshRenderer[] Ak47;
+    public MeshRenderer[] Ak47;
     private MeshRenderer[] M4A1;
     private Animation ani;
     private readonly string weaponAni = "draw";
@@ -21,7 +21,7 @@ public class ChangeWeapon : MonoBehaviour
     {
         ani.Play(weaponAni);
     }
-    void ShotGun()
+    public void ShotGun()
     {
         for (int i = 0; i < Ak47.Length; i++)
         {
@@ -33,7 +33,7 @@ public class ChangeWeapon : MonoBehaviour
         }
         Spas12.enabled = true;
     }
-    void Ak47Rifle()
+    public void Ak47Rifle()
     {
         for (int i = 0; i < Ak47.Length; i++)
         {
@@ -45,7 +45,7 @@ public class ChangeWeapon : MonoBehaviour
         }
         Spas12.enabled = false;
     }
-    void M4Rifle()
+    public void M4Rifle()
     {
         for (int i = 0; i < Ak47.Length; i++)
         {

@@ -306,6 +306,7 @@ m_ResolvedPackages:
     - 1.1.4
     - 1.1.5
     - 1.1.6
+    - 1.1.7
     - 2.0.0-pre.3
     - 2.0.0-pre.4
     - 2.0.0
@@ -318,7 +319,8 @@ m_ResolvedPackages:
     compatible:
     - 1.1.5
     - 1.1.6
-    recommended: 1.1.6
+    - 1.1.7
+    recommended: 1.1.7
     deprecated: []
   dependencies:
   - name: com.unity.modules.ai
@@ -1016,7 +1018,7 @@ m_ResolvedPackages:
     - 5.0.0-pre.5
     - 5.0.0-pre.6
     - 5.0.0-pre.7
-    recommended: 5.0.0-pre.7
+    recommended: 4.12.2
     deprecated: []
   dependencies:
   - name: com.unity.ugui
@@ -1071,7 +1073,7 @@ m_ResolvedPackages:
   unityLifecycle:
     version: 4.11.0
     nextVersion: 
-    recommendedVersion: 5.0.0-pre.6
+    recommendedVersion: 4.12.2
     isDeprecated: 0
     deprecationMessage: 
   isDeprecated: 0
@@ -3934,7 +3936,7 @@ m_ResolvedPackages:
     compatible:
     - 6.0.3
     - 6.1.0
-    recommended: 6.1.0
+    recommended: 
     deprecated: []
   dependencies:
   - name: com.unity.ugui
@@ -3982,7 +3984,7 @@ m_ResolvedPackages:
   unityLifecycle:
     version: 6.0.3
     nextVersion: 
-    recommendedVersion: 6.1.0
+    recommendedVersion: 5.0.0
     isDeprecated: 0
     deprecationMessage: 
   isDeprecated: 0
