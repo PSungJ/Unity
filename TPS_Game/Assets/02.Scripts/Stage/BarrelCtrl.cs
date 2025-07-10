@@ -6,7 +6,7 @@ using UnityEngine;
 public class BarrelCtrl : MonoBehaviour
 {
     [SerializeField] GameObject expEffect;
-    [SerializeField] AudioSource source;
+    //[SerializeField] AudioSource source;
     [SerializeField] AudioClip expClip;
     int hitcount = 0;
     [SerializeField] Rigidbody rb;
@@ -30,7 +30,7 @@ public class BarrelCtrl : MonoBehaviour
         barrelLayer = LayerMask.NameToLayer("BARREL");
         enemyLayer = LayerMask.NameToLayer("ENEMY");
         rb = GetComponent<Rigidbody>();
-        source = GetComponent<AudioSource>();
+        //source = GetComponent<AudioSource>();
         _renderer = GetComponent<MeshRenderer>();
          meshFilter = GetComponent<MeshFilter>();
         textures = Resources.LoadAll<Texture>("Textures");
@@ -49,11 +49,15 @@ public class BarrelCtrl : MonoBehaviour
 
         }
     }
-    void ExpolosionBarrel()
+    
+    private void ExpolosionBarrel()
     {
-        var exp = Instantiate(expEffect,transform.position,Quaternion.identity);
-        Destroy(exp,1.5f);
-        source.PlayOneShot(expClip, 1.0f);
+        //var exp = Instantiate(expEffect, transform.position, Quaternion.identity);
+        //Destroy(exp, 1.5f);
+        var exp = PoolingManager.p_instance.GetExp();
+        exp.SetActive(true);
+        //source.PlayOneShot(expClip, 1.0f);
+        SoundManager.S_instance.PlaySfx(transform.position, expClip, false);
         int idx = Random.Range(0, meshes.Length);
         meshFilter.sharedMesh = meshes[idx];
         //찌그러진 메쉬를 적용 

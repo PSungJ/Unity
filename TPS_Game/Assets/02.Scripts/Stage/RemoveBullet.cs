@@ -5,13 +5,13 @@ using UnityEngine;
 public class RemoveBullet : MonoBehaviour
 {
     public GameObject Spark;
-    public AudioSource source;
+    //public AudioSource source;
     public AudioClip hitClip;
     private readonly string bulletTag = "BULLET";
     private readonly string E_bulletTag = "E_BULLET";
     void Start()
     {
-        source = GetComponent<AudioSource>();
+        //source = GetComponent<AudioSource>();
         Spark = Resources.Load("Weapon/FlareMobile") as GameObject;
         hitClip = Resources.Load("Sounds/bullet_hit_metal_enemy_4") as AudioClip;
     }
@@ -30,7 +30,8 @@ public class RemoveBullet : MonoBehaviour
             //법선벡터가 이루는 회전 각도 추출 
             var spk =Instantiate(Spark,contact.point,rot);
             Destroy(spk,1f);
-            source.PlayOneShot(hitClip, 1.0f);
+            //source.PlayOneShot(hitClip, 1.0f);
+            SoundManager.S_instance.PlaySfx(contact.point, hitClip, false);
         }
     }
 

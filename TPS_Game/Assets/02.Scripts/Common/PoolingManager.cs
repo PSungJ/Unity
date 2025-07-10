@@ -21,6 +21,10 @@ public class PoolingManager : MonoBehaviour
     [SerializeField] Canvas uiCanvas;
     [SerializeField] GameObject hpBarprefab;
     [SerializeField] List<GameObject> hpBarPool;
+    [Header("Barrel Explosion")]
+    [SerializeField] private GameObject expPrefab;
+    [SerializeField] private int b_maxPool = 10;
+    [SerializeField] private List<GameObject> expPool = new List<GameObject>();
 
     void Awake()
     {
@@ -38,7 +42,7 @@ public class PoolingManager : MonoBehaviour
         CreateBullet();
         CreateE_Bullet();
         StartCoroutine(CreateEnemyPooling());
-        
+        ExplodeBarrel();
     }
     private void Start()
     {
@@ -143,6 +147,27 @@ public class PoolingManager : MonoBehaviour
             {
                 return _hpbar;
             }
+        }
+        return null;
+    }
+
+    public void ExplodeBarrel()
+    {
+        var expGroup = new GameObject("expGroup");
+        for (int i = 0; i < b_maxPool; i++)
+        {
+            var exp = Instantiate(enemyPrefab, expGroup.transform);
+            exp.name = $"Æø¹ßÈ¿°ú {i + 1}";
+            exp.SetActive(false);
+            expPool.Add(exp);
+        }
+    }
+    public GameObject GetExp()
+    {
+        for (int i = 0; i < expPool.Count; i++)
+        {
+            if (expPool[i].activeSelf == false)
+                return expPool[i];
         }
         return null;
     }

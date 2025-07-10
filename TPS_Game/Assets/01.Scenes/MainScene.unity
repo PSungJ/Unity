@@ -5766,6 +5766,9 @@ MonoBehaviour:
   uiCanvas: {fileID: 1429901812}
   hpBarprefab: {fileID: 0}
   hpBarPool: []
+  expPrefab: {fileID: 478074942038931686, guid: 31c8a168fd6610b44ada0784e51279ae, type: 3}
+  b_maxPool: 10
+  expPool: []
 --- !u!4 &1885508142
 Transform:
   m_ObjectHideFlags: 0

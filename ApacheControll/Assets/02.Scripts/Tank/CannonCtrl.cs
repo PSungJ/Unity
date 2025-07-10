@@ -20,7 +20,7 @@ public class CannonCtrl : MonoBehaviour
 
     void Update()
     {
-        float wheel = input.m_scrollWheel;
+        float wheel = -input.m_scrollWheel;
         float angle = Time.deltaTime * rotSpeed * wheel;
         if (wheel <= -0.01f)    // 포신을 올릴 때
         {
