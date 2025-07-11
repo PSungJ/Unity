@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - TANK
+  - APACHE
   layers:
   - Default
   - TransparentFX

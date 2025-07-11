@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
+using Photon.Pun;
 
-public class FireCannon : MonoBehaviour
+//RPC : Remote Procedure Call
+
+public class FireCannon : MonoBehaviourPun
 {
     private TankInput input;
     private AudioSource source;
@@ -19,6 +22,8 @@ public class FireCannon : MonoBehaviour
     Vector3 normal;
     Quaternion rot;
     GameObject eff;
+    private readonly string TankTag = "TANK";
+    private readonly string ApacheTag = "APACHE";
 
     void Start()
     {
@@ -36,16 +41,28 @@ public class FireCannon : MonoBehaviour
     {
         if (input.isFire)
         {
-            Fire();
+            if (photonView.IsMine)
+            {
+                Fire();
+                photonView.RPC("Fire", RpcTarget.Others);
+            }
         }
     }
+    [PunRPC]    // 원격지에 있는 네트워크 유저가 Fire를 호출할 수 있게 해주는 Attribute
     void Fire()
     {
         source.PlayOneShot(fireClip, 1f);
         RaycastHit hit;
         ray = new Ray (firePos.position, firePos.forward);
         if (Physics.Raycast(ray, out hit, 200f, terrainLayer))
+        {
             isHit = true;
+            if (hit.collider.CompareTag(TankTag))   // 맞은 콜라이더의 태그 전달
+            {
+                string tag = hit.collider.tag;
+                hit.collider.transform.SendMessage("OnDamage", tag, SendMessageOptions.DontRequireReceiver);
+            }
+        }
         else
             isHit = false;
 

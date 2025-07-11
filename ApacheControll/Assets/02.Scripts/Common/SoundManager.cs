@@ -31,4 +31,18 @@ public class SoundManager : MonoBehaviour
 
         Destroy(soundObj, audioSource.clip.length);
     }
+
+    public void PlayBGM(Vector3 pos, AudioClip clip, bool isLooped)
+    {
+        if (isMute) return;
+        GameObject soundObj = new GameObject("BGMSound");
+        soundObj.transform.position = pos;
+        AudioSource audioSource = soundObj.AddComponent<AudioSource>(); // 컴퍼넌트가 없으면 새로 생성
+        audioSource.clip = clip;
+        audioSource.loop = isLooped;
+        audioSource.minDistance = 20f;
+        audioSource.maxDistance = 100f;
+        audioSource.volume = 1.0f;
+        audioSource.Play();
+    }
 }
