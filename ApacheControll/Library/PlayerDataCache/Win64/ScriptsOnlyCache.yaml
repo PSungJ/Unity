@@ -15,10 +15,12 @@ ScriptsOnlyBuild:
     - TurretCtrl
     - UILookAtCamera
     Assembly-CSharp.dll:
+    - ChatManager
     - GameManager
     - PathPoint
     - Photon_Init
     - PoolingManager
+    - RoomData
     - SoundManager
     Cinemachine.dll:
     - Cinemachine.CinemachineBrain
@@ -60,6 +62,10 @@ ScriptsOnlyBuild:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
+    UnityEditor.UI.dll:
+    - UnityEditor.UI.ButtonEditor
+    - UnityEditor.UI.HorizontalOrVerticalLayoutGroupEditor
+    - UnityEditor.UI.ImageEditor
     UnityEngine.UI:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
@@ -73,9 +79,14 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.GridLayoutGroup
+    - UnityEngine.UI.HorizontalLayoutGroup
     - UnityEngine.UI.Image
     - UnityEngine.UI.InputField
+    - UnityEngine.UI.Mask
     - UnityEngine.UI.Outline
+    - UnityEngine.UI.ScrollRect
+    - UnityEngine.UI.Scrollbar
     - UnityEngine.UI.Text
   serializedClasses:
     Cinemachine:
@@ -93,6 +104,7 @@ ScriptsOnlyBuild:
     - UnityEngine.Events.ArgumentCache
     - UnityEngine.Events.PersistentCallGroup
     - UnityEngine.Events.PersistentListenerMode
+    - UnityEngine.RectOffset
     UnityEngine.UI:
     - UnityEngine.UI.AnimationTriggers
     - UnityEngine.UI.Button/ButtonClickedEvent
@@ -103,12 +115,23 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.InputField/SubmitEvent
     - UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
     - UnityEngine.UI.Navigation
+    - UnityEngine.UI.ScrollRect/ScrollRectEvent
+    - UnityEngine.UI.Scrollbar/ScrollEvent
     - UnityEngine.UI.Slider/SliderEvent
     - UnityEngine.UI.SpriteState
   methodsToPreserve:
   - assembly: Assembly-CSharp
+    fullTypeName: ChatManager
+    methodName: OnEnter
+  - assembly: Assembly-CSharp
+    fullTypeName: Photon_Init
+    methodName: OnClickCreateRoom
+  - assembly: Assembly-CSharp
     fullTypeName: Photon_Init
     methodName: OnClickJoinRandom
+  - assembly: Assembly-CSharp
+    fullTypeName: ChatManager
+    methodName: OnEnter
   sceneClasses:
     Assets/01.Scenes/BattlelField.unity:
     - Class: 1
@@ -138,24 +161,44 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 17882}
+      Script: {instanceID: 16714}
     - Class: 114
-      Script: {instanceID: 18032}
+      Script: {instanceID: 16722}
     - Class: 114
-      Script: {instanceID: 20364}
+      Script: {instanceID: 16772}
     - Class: 114
-      Script: {instanceID: 20464}
+      Script: {instanceID: 17888}
     - Class: 114
-      Script: {instanceID: 20738}
+      Script: {instanceID: 17964}
     - Class: 114
-      Script: {instanceID: 21382}
+      Script: {instanceID: 18038}
     - Class: 114
-      Script: {instanceID: 22716}
+      Script: {instanceID: 18188}
     - Class: 114
-      Script: {instanceID: 23224}
+      Script: {instanceID: 18240}
     - Class: 114
-      Script: {instanceID: 23946}
+      Script: {instanceID: 19392}
+    - Class: 114
+      Script: {instanceID: 20370}
+    - Class: 114
+      Script: {instanceID: 20470}
+    - Class: 114
+      Script: {instanceID: 20744}
+    - Class: 114
+      Script: {instanceID: 21388}
+    - Class: 114
+      Script: {instanceID: 21958}
+    - Class: 114
+      Script: {instanceID: 22722}
+    - Class: 114
+      Script: {instanceID: 23230}
+    - Class: 114
+      Script: {instanceID: 23952}
+    - Class: 114
+      Script: {instanceID: 26030}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 154
       Script: {instanceID: 0}
@@ -171,7 +214,15 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 199
       Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
     - Class: 218
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
       Script: {instanceID: 0}
     - Class: 1953259897
       Script: {instanceID: 0}
@@ -223,91 +274,105 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 16716}
     - Class: 114
-      Script: {instanceID: 16748}
+      Script: {instanceID: 16720}
     - Class: 114
-      Script: {instanceID: 16770}
+      Script: {instanceID: 16722}
     - Class: 114
-      Script: {instanceID: 16820}
+      Script: {instanceID: 16750}
     - Class: 114
-      Script: {instanceID: 16926}
+      Script: {instanceID: 16772}
     - Class: 114
-      Script: {instanceID: 16944}
+      Script: {instanceID: 16822}
     - Class: 114
-      Script: {instanceID: 16972}
+      Script: {instanceID: 16928}
     - Class: 114
-      Script: {instanceID: 17012}
+      Script: {instanceID: 16946}
     - Class: 114
-      Script: {instanceID: 17842}
+      Script: {instanceID: 16974}
     - Class: 114
-      Script: {instanceID: 17882}
+      Script: {instanceID: 17014}
     - Class: 114
-      Script: {instanceID: 17958}
+      Script: {instanceID: 17392}
     - Class: 114
-      Script: {instanceID: 18032}
+      Script: {instanceID: 17650}
     - Class: 114
-      Script: {instanceID: 18182}
+      Script: {instanceID: 17848}
     - Class: 114
-      Script: {instanceID: 18234}
+      Script: {instanceID: 17888}
     - Class: 114
-      Script: {instanceID: 18424}
+      Script: {instanceID: 17964}
     - Class: 114
-      Script: {instanceID: 19328}
+      Script: {instanceID: 18038}
+    - Class: 114
+      Script: {instanceID: 18188}
+    - Class: 114
+      Script: {instanceID: 18240}
+    - Class: 114
+      Script: {instanceID: 18430}
     - Class: 114
       Script: {instanceID: 19334}
     - Class: 114
-      Script: {instanceID: 19518}
+      Script: {instanceID: 19340}
     - Class: 114
-      Script: {instanceID: 20364}
+      Script: {instanceID: 19392}
     - Class: 114
-      Script: {instanceID: 20464}
+      Script: {instanceID: 19524}
     - Class: 114
-      Script: {instanceID: 20692}
+      Script: {instanceID: 20370}
     - Class: 114
-      Script: {instanceID: 20708}
+      Script: {instanceID: 20394}
     - Class: 114
-      Script: {instanceID: 20944}
+      Script: {instanceID: 20470}
     - Class: 114
-      Script: {instanceID: 21150}
+      Script: {instanceID: 20698}
     - Class: 114
-      Script: {instanceID: 21198}
+      Script: {instanceID: 20714}
     - Class: 114
-      Script: {instanceID: 21366}
+      Script: {instanceID: 20950}
     - Class: 114
-      Script: {instanceID: 21382}
+      Script: {instanceID: 21156}
     - Class: 114
-      Script: {instanceID: 21418}
+      Script: {instanceID: 21204}
     - Class: 114
-      Script: {instanceID: 21824}
+      Script: {instanceID: 21372}
     - Class: 114
-      Script: {instanceID: 21952}
+      Script: {instanceID: 21388}
     - Class: 114
-      Script: {instanceID: 21960}
+      Script: {instanceID: 21828}
     - Class: 114
-      Script: {instanceID: 22072}
+      Script: {instanceID: 21878}
     - Class: 114
-      Script: {instanceID: 22324}
+      Script: {instanceID: 21958}
     - Class: 114
-      Script: {instanceID: 22600}
+      Script: {instanceID: 21966}
     - Class: 114
-      Script: {instanceID: 22716}
+      Script: {instanceID: 21970}
     - Class: 114
-      Script: {instanceID: 22758}
+      Script: {instanceID: 22078}
     - Class: 114
-      Script: {instanceID: 22796}
+      Script: {instanceID: 22330}
     - Class: 114
-      Script: {instanceID: 23150}
+      Script: {instanceID: 22606}
     - Class: 114
-      Script: {instanceID: 23546}
+      Script: {instanceID: 22722}
     - Class: 114
-      Script: {instanceID: 23680}
+      Script: {instanceID: 22764}
     - Class: 114
-      Script: {instanceID: 24020}
+      Script: {instanceID: 22802}
     - Class: 114
-      Script: {instanceID: 42112}
+      Script: {instanceID: 23156}
     - Class: 114
-      Script: {instanceID: 44434}
+      Script: {instanceID: 23160}
     - Class: 114
-      Script: {instanceID: 46464}
+      Script: {instanceID: 23552}
+    - Class: 114
+      Script: {instanceID: 23686}
+    - Class: 114
+      Script: {instanceID: 24026}
+    - Class: 114
+      Script: {instanceID: 26030}
+    - Class: 114
+      Script: {instanceID: 64012}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -377,6 +442,12 @@ ScriptsOnlyBuild:
     className: HorizontalLayoutGroup
   - hash:
       serializedVersion: 2
+      Hash: 540882762544409cc4530e60db00e951
+    assemblyName: UnityEngine.UI
+    namespaceName: UnityEngine.UI
+    className: CanvasScaler
+  - hash:
+      serializedVersion: 2
       Hash: e5ced545fd8a42a1f50e04211216ab80
     assemblyName: Assembly-CSharp
     namespaceName: Photon.Realtime.Demo
@@ -389,7 +460,7 @@ ScriptsOnlyBuild:
     className: PanelRaycaster
   - hash:
       serializedVersion: 2
-      Hash: a73fac60ececb43f6a4278d7e6f1c5ed
+      Hash: 91f5323e8c03362031e92fea05f35104
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: Photon_Init
@@ -575,6 +646,12 @@ ScriptsOnlyBuild:
     className: RoomListCell
   - hash:
       serializedVersion: 2
+      Hash: 3ec421a5ce81bd84904b718a1ae9a675
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: UILookAtCamera
+  - hash:
+      serializedVersion: 2
       Hash: 769f5e9c16ce785feedf230d7f91392f
     assemblyName: Cinemachine
     namespaceName: Cinemachine
@@ -645,6 +722,12 @@ ScriptsOnlyBuild:
     assemblyName: PhotonUnityNetworking.Demos
     namespaceName: Photon.Pun.Demo.Cockpit
     className: CurrentRoomIsOpenToggle
+  - hash:
+      serializedVersion: 2
+      Hash: e7f7e0c231e39d4d31351dd4e99237da
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TankDamage
   - hash:
       serializedVersion: 2
       Hash: 882004457f50aacfee7b83cb227a218d
@@ -1799,12 +1882,6 @@ ScriptsOnlyBuild:
     className: InfosPanelPlaceholder
   - hash:
       serializedVersion: 2
-      Hash: 540882762544409cc4530e60db00e951
-    assemblyName: UnityEngine.UI
-    namespaceName: UnityEngine.UI
-    className: CanvasScaler
-  - hash:
-      serializedVersion: 2
       Hash: 560346f4cbb7006f1b0bb6c77805d7ec
     assemblyName: Cinemachine
     namespaceName: Cinemachine
@@ -1889,6 +1966,12 @@ ScriptsOnlyBuild:
     className: SplinePosition
   - hash:
       serializedVersion: 2
+      Hash: f82e9f15a3fa13b211cbc34acb2f8c1d
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: DisplayUserID
+  - hash:
+      serializedVersion: 2
       Hash: 4f353524ce6564e40764f1ea080b2d85
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
@@ -1955,7 +2038,7 @@ ScriptsOnlyBuild:
     className: CinemachineImpulseListener
   - hash:
       serializedVersion: 2
-      Hash: 44209f540b0d91c7ca09de6ebdc28b40
+      Hash: 20d0a8b5e474ab22be346d8193537897
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: FireCannon
@@ -2597,22 +2680,16 @@ ScriptsOnlyBuild:
     className: UnityOnSliderValueChangedMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 3ec421a5ce81bd84904b718a1ae9a675
+      Hash: 745f8e9f1ada521f4198f094c241fdfa
     assemblyName: Assembly-CSharp
     namespaceName: 
-    className: UILookAtCamera
+    className: ChatManager
   - hash:
       serializedVersion: 2
-      Hash: 02a354e694d3730058b3b11bd7ad3ef4
+      Hash: 632ec455462db1c77562010e9062eeb6
     assemblyName: Assembly-CSharp
     namespaceName: 
-    className: TankDamage
-  - hash:
-      serializedVersion: 2
-      Hash: f82e9f15a3fa13b211cbc34acb2f8c1d
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: DisplayUserID
+    className: RoomData
   platform: 19
   scenePathNames:
   - Assets/01.Scenes/LobbyScene.unity

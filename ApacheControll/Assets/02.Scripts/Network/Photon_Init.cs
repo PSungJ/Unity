@@ -11,12 +11,18 @@ public class Photon_Init : MonoBehaviourPunCallbacks
 {
     public string Version = "V1.1.0";
     public InputField userID;
+    public InputField roomName;
+    public GameObject roomItem; // roomPrefab 프리팹
+    public Transform scrollContents;    // roomItem이 생성될 위치
 
     void Awake()
     {
-        PhotonNetwork.GameVersion = Version;
-        PhotonNetwork.ConnectUsingSettings();   // 포톤 네트워크 접속
-        //SoundManager.S_instance.PlayBGM("BGM");
+        if (!PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.GameVersion = Version;
+            PhotonNetwork.ConnectUsingSettings();   // 포톤 네트워크 접속
+            roomName.text = $"Room_{Random.Range(0, 999).ToString("000")}";
+        }
     }
 
     public override void OnConnectedToMaster()
@@ -47,7 +53,7 @@ public class Photon_Init : MonoBehaviourPunCallbacks
     {
         base.OnJoinRandomFailed(returnCode, message);
         print("룸 연결 실패!!");
-        PhotonNetwork.CreateRoom("ㅏㅏ", new RoomOptions { IsOpen = true, IsVisible = true, MaxPlayers = 20});
+        //PhotonNetwork.CreateRoom("ㅏㅏ", new RoomOptions { IsOpen = true, IsVisible = true, MaxPlayers = 20});
     }
 
     public override void OnJoinedRoom()
@@ -71,6 +77,56 @@ public class Photon_Init : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = userID.text;
         PlayerPrefs.SetString("USER_ID", userID.text);
         PhotonNetwork.JoinRandomRoom();
+    }
+
+    public void OnClickCreateRoom()
+    {
+        string _roomName = roomName.text;
+        if (string.IsNullOrEmpty(roomName.text))
+        {
+            _roomName = $"Room_{Random.Range(0, 999).ToString("000")}";
+        }
+        // 설정한 아이디를 대입
+        PhotonNetwork.NickName = userID.text;
+        PlayerPrefs.SetString("USER_ID", userID.text);
+        RoomOptions roomOptions = new RoomOptions();
+        roomOptions.IsOpen = true;
+        roomOptions.IsVisible = true;
+        roomOptions.MaxPlayers = 20;
+
+        PhotonNetwork.CreateRoom(_roomName, roomOptions, TypedLobby.Default);
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)  // 룸이 생성되거나 삭제시 자동으로 호출
+    {
+        foreach(GameObject obj in GameObject.FindGameObjectsWithTag("ROOMITEM"))
+        {
+            Destroy(obj);   // 삭제 할 때마다 룸을 처음부터 다시 구성한다.
+        }
+
+        foreach (RoomInfo roomInfo in roomList)
+        {
+            //RoomItem 프리팹 동적 생성
+            GameObject roomPrefab = Instantiate(roomItem);
+            roomPrefab.transform.SetParent(scrollContents.transform, false);
+
+            RoomData roomData = roomPrefab.GetComponent<RoomData>();
+            roomData.roomName = roomInfo.Name;
+            roomData.connectPlayer = roomInfo.PlayerCount;
+            roomData.maxPlayer = roomInfo.MaxPlayers;
+            
+            roomData.DisplayRoomData();
+            // RoomItem의 Button 컴퍼넌트에 클릭 이벤트를 동적으로 연결
+            // 이것을 동적 이벤트 리스너라고 한다.
+            roomData.GetComponent<Button>().onClick.AddListener(delegate { OnClickRoomItem(roomData.roomName); });            
+        }
+    }
+
+    void OnClickRoomItem(string roomName)
+    {
+        PhotonNetwork.NickName = userID.text;
+        PlayerPrefs.SetString("USER_ID", userID.text);
+        PhotonNetwork.JoinRoom(roomName);
     }
 
     public void OnGUI()

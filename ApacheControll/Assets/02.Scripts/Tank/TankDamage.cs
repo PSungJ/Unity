@@ -14,12 +14,13 @@ public class TankDamage : MonoBehaviourPun
     private GameObject expEffect = null;
     public Image hpBar;
     private WaitForSeconds ws;
+    public Canvas tankCanvas;
 
 
     void Start()
     {
         renderers = GetComponentsInChildren<MeshRenderer>();
-        expEffect = Resources.Load<GameObject>("/Effects/BigExplosionEffect");
+        expEffect = Resources.Load<GameObject>("Effects/BigExplosionEffect");
         curHp = InitHp;
         hpBar.color = Color.green;
         ws = new WaitForSeconds(5f);
@@ -48,11 +49,19 @@ public class TankDamage : MonoBehaviourPun
         var eff = Instantiate(expEffect, transform.position, Quaternion.identity);
         Destroy(eff, 2f);
         GetComponent<BoxCollider>().enabled = false;
+        GetComponent<Rigidbody>().isKinematic = true;
+        tankCanvas.enabled = false;
         SetTankVisible(false);
+        this.gameObject.tag = "Untagged";
+
         yield return ws;
         SetTankVisible(true);
         GetComponent<BoxCollider>().enabled = true;
+        GetComponent<Rigidbody>().isKinematic = false;
         curHp = InitHp;
+        tankCanvas.enabled = true;
+        hpBar.fillAmount = 1.0f;
+        hpBar.color = Color.green;
     }
 
     void SetTankVisible(bool isVisible)

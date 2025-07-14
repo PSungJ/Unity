@@ -16,6 +16,7 @@ public class FireCannon : MonoBehaviourPun
     [SerializeField] private AudioClip fireClip;
     [SerializeField] private AudioClip expClip;
     [SerializeField] private int terrainLayer;
+    [SerializeField] private int tankLayer;
     public bool isHit = false;
     Ray ray;
     Vector3 hitPoint;
@@ -34,7 +35,8 @@ public class FireCannon : MonoBehaviourPun
         expEffect = Resources.Load<GameObject>("Effects/BigExplosionEffect");
         fireClip = Resources.Load<AudioClip>("Sounds/ShootMissile");
         expClip = Resources.Load<AudioClip>("Sounds/DestroyedExplosion");
-        terrainLayer = LayerMask.GetMask("TERRAIN");
+        terrainLayer = LayerMask.NameToLayer("TERRAIN");
+        tankLayer = LayerMask.NameToLayer("TANK");
     }
 
     void Update()
@@ -54,7 +56,7 @@ public class FireCannon : MonoBehaviourPun
         source.PlayOneShot(fireClip, 1f);
         RaycastHit hit;
         ray = new Ray (firePos.position, firePos.forward);
-        if (Physics.Raycast(ray, out hit, 200f, terrainLayer))
+        if (Physics.Raycast(ray, out hit, 200f, 1 << terrainLayer | 1 << tankLayer))
         {
             isHit = true;
             if (hit.collider.CompareTag(TankTag))   // 맞은 콜라이더의 태그 전달

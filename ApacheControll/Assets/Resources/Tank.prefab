@@ -478,7 +478,6 @@ GameObject:
   - component: {fileID: 6707294069114272687}
   - component: {fileID: 4204393708597930412}
   - component: {fileID: 7259312392809085906}
-  - component: {fileID: 9189093059896776846}
   m_Layer: 7
   m_Name: Turret
   m_TagString: Untagged
@@ -532,28 +531,12 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 0
+  observableSearch: 2
   ObservedComponents:
-  - {fileID: 9189093059896776846}
+  - {fileID: 4204393708597930412}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &9189093059896776846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3699735870609232163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 0
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &4253527767742828260
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,7 +979,6 @@ GameObject:
   - component: {fileID: 1418327072714290828}
   - component: {fileID: 9038116656133723198}
   - component: {fileID: 4017085362166317491}
-  - component: {fileID: 7269342450248724076}
   - component: {fileID: 7834697092757451650}
   - component: {fileID: -3555878256903509656}
   m_Layer: 7
@@ -1223,6 +1205,7 @@ MonoBehaviour:
   fireClip: {fileID: 0}
   expClip: {fileID: 0}
   terrainLayer: 0
+  tankLayer: 0
   isHit: 0
 --- !u!114 &4017085362166317491
 MonoBehaviour:
@@ -1241,28 +1224,12 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 0
+  observableSearch: 2
   ObservedComponents:
-  - {fileID: 7269342450248724076}
+  - {fileID: 1418327072714290828}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7269342450248724076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6233141645500314911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &7834697092757451650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1277,6 +1244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderers: []
   hpBar: {fileID: 5557394167602859693}
+  tankCanvas: {fileID: 7455317783425819349}
 --- !u!114 &-3555878256903509656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1376,7 +1344,6 @@ GameObject:
   - component: {fileID: 7151501523115451732}
   - component: {fileID: 7854791443137288174}
   - component: {fileID: 636523672568444054}
-  - component: {fileID: 9205958828093488632}
   m_Layer: 7
   m_Name: Cannon
   m_TagString: Untagged
@@ -1434,28 +1401,12 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 0
+  observableSearch: 2
   ObservedComponents:
-  - {fileID: 9205958828093488632}
+  - {fileID: 7854791443137288174}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &9205958828093488632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7009691554122640537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 0
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &7077915353118120725
 GameObject:
   m_ObjectHideFlags: 0
