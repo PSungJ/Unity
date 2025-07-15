@@ -1,14 +1,15 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Pun;
 
 public class TankDamage : MonoBehaviourPun
 {
     [SerializeField] private MeshRenderer[] renderers;
     private readonly string tankTag = "TANK";
-    private readonly string apacheTage = "APACHE";
+    private readonly string apacheTag = "APACHE";
     private readonly int InitHp = 100;
     private int curHp = 0;
     private GameObject expEffect = null;
@@ -38,10 +39,27 @@ public class TankDamage : MonoBehaviourPun
         if (curHp > 0 && Tag == tankTag)
         {
             // 데미지 전달
-            hpBarInit(Tag);
-            if (curHp <= 0)
-                StartCoroutine(ExplosionTank());
+            hpBarInit(Tag, 25);
         }
+        if (curHp <= 0)
+            StartCoroutine(ExplosionTank());
+    }
+
+    public void OnApacheDamage(string Tag)
+    {
+        photonView.RPC("OnApacheDamageRPC", RpcTarget.All, Tag);
+        Debug.Log("Apache 데미지 전달");
+    }
+
+    [PunRPC]
+    void OnApacheDamageRPC(string Tag)
+    {
+        if (curHp > 0 && Tag == tankTag)
+        {
+            hpBarInit(Tag, 10);
+        }
+        if (curHp <= 0)
+            StartCoroutine(ExplosionTank());
     }
 
     IEnumerator ExplosionTank()
@@ -53,6 +71,7 @@ public class TankDamage : MonoBehaviourPun
         tankCanvas.enabled = false;
         SetTankVisible(false);
         this.gameObject.tag = "Untagged";
+        TankScriptsOnOff(false);
 
         yield return ws;
         SetTankVisible(true);
@@ -62,6 +81,15 @@ public class TankDamage : MonoBehaviourPun
         tankCanvas.enabled = true;
         hpBar.fillAmount = 1.0f;
         hpBar.color = Color.green;
+        this.gameObject.tag = tankTag;
+        TankScriptsOnOff(true);
+    }
+
+    private void TankScriptsOnOff(bool isEnable)
+    {
+        var scripts = GetComponentsInChildren<MonoBehaviourPun>();
+        foreach (var script in scripts)
+            script.enabled = isEnable;
     }
 
     void SetTankVisible(bool isVisible)
@@ -72,14 +100,14 @@ public class TankDamage : MonoBehaviourPun
         }
     }
 
-    void hpBarInit(string Tag)
+    void hpBarInit(string Tag, int damage)
     {
         if (Tag == tankTag)
-            curHp -= 25;
+            curHp -= damage;
         else
             curHp -= 1;
 
-            hpBar.fillAmount = (float)curHp / (float)InitHp;
+        hpBar.fillAmount = (float)curHp / (float)InitHp;
         if (hpBar.fillAmount <= 0.7f)
         {
             hpBar.color = Color.yellow;

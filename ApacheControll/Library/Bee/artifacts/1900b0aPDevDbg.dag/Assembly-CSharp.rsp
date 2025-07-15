@@ -333,6 +333,7 @@
 "Assets/02.Scripts/Apache/PathPoint.cs"
 "Assets/02.Scripts/Common/ChatManager.cs"
 "Assets/02.Scripts/Common/GameManager.cs"
+"Assets/02.Scripts/Common/HoverEvent.cs"
 "Assets/02.Scripts/Common/LaserBeam.cs"
 "Assets/02.Scripts/Common/MyGizmos.cs"
 "Assets/02.Scripts/Common/PoolingManager.cs"

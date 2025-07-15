@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class FireGun : MonoBehaviour
+public class FireGun : MonoBehaviourPun
 {
     //private AudioSource source;
     public AudioClip fireClip;
@@ -12,7 +13,7 @@ public class FireGun : MonoBehaviour
     [SerializeField] LineRenderer right_firePos = null;
     [SerializeField] private GameObject expEffect;
     public int tankLayer;
-    private float maxDelay = 0.3f;
+    private float maxDelay = 1f;
     private float curDelay = 0f;
 
     void Start()
@@ -46,19 +47,23 @@ public class FireGun : MonoBehaviour
         if (Physics.Raycast(ray1, out hit, Mathf.Infinity, 1 << tankLayer) || Physics.Raycast(ray2, out hit, Mathf.Infinity, 1 << tankLayer))
         {
             curDelay -= 0.01f;
+
             if (curDelay <= 0)
             {
                 curDelay = maxDelay;
                 left_firePos.GetComponent<LaserBeam>().FireRay();
                 right_firePos.GetComponent<LaserBeam>().FireRay();
+                
+                string tag = hit.collider.tag;
+                hit.collider.transform.SendMessage("OnApacheDamageRPC", tag, SendMessageOptions.DontRequireReceiver);
 
                 SoundManager.S_instance.PlaySfx(transform.position, fireClip, false);
-                StartCoroutine(Exposion(hit));
+                StartCoroutine(Explosion(hit));
             }
         }
     }
 
-    IEnumerator Exposion(RaycastHit hit)
+    IEnumerator Explosion(RaycastHit hit)
     {
         Vector3 hitPos = hit.point;
         Vector3 hitNormal = (left_firePos.transform.position - hitPos).normalized;

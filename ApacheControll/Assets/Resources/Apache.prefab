@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 7870766329437793777}
   - component: {fileID: 3345876282999974128}
   - component: {fileID: 4016935720375777250}
+  - component: {fileID: 2029144781444402117}
   m_Layer: 0
   m_Name: Apache
   m_TagString: APACHE
@@ -388,7 +389,8 @@ MonoBehaviour:
   pathPoint: []
   rotSpeed: 15
   moveSpeed: 10
-  isSearch: 1
+  playerTanks: []
+  tank: {fileID: 0}
 --- !u!114 &4016935720375777250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +410,28 @@ MonoBehaviour:
   right_firePos: {fileID: 0}
   expEffect: {fileID: 1000011797152326, guid: 9534c1d53e66b164bb96370be69b6bc9, type: 3}
   tankLayer: 0
+--- !u!114 &2029144781444402117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818975241322804579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1214602938138150183
 GameObject:
   m_ObjectHideFlags: 0

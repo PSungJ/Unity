@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.EventSystems;
 
 //RPC : Remote Procedure Call
 
@@ -41,6 +41,9 @@ public class FireCannon : MonoBehaviourPun
 
     void Update()
     {
+        //if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (HoverEvent.eventInstance.isEnter) return;
+
         if (input.isFire)
         {
             if (photonView.IsMine)
