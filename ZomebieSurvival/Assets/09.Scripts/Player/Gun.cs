@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
+using Photon.Pun;
 
-public class Gun : MonoBehaviour
+public class Gun : MonoBehaviourPun, IPunObservable
 {
     public enum State
     {
@@ -54,6 +55,35 @@ public class Gun : MonoBehaviour
         lastFireTime = 0f;          // 마지막 발사시간 초기화
     }
 
+    //void Start()
+    //{
+    //    // 통신 방식(PhotonView Scripts 컴퍼넌트 설정값)
+    //    photonView.Synchronization = ViewSynchronization.ReliableDeltaCompressed;
+    //    photonView.ObservedComponents[0] = this;
+    //}
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)   // 로컬 오브젝트라면 실행
+        {
+            stream.SendNext(ammoRemain);
+            stream.SendNext(magAmmo);
+            stream.SendNext(state);         // 남은 탄약, 탄창내의 탄약, 총의 상태 송신
+        }
+        else    // 리모트 오브젝트의 경우 실행
+        {
+            ammoRemain = (int) stream.ReceiveNext();
+            magAmmo = (int)stream.ReceiveNext();
+            state = (State)stream.ReceiveNext();    // 남은 탄약, 탄창내의 탄약, 총의 상태 수신
+        }
+    }
+
+    [PunRPC]
+    public void AddAmmo(int ammo)
+    {
+        ammoRemain += ammo;
+    }
+
     public void Fire()
     {
         // 발사 가능 조건검사 함수
@@ -67,25 +97,27 @@ public class Gun : MonoBehaviour
     private void Shot()
     {
         // 실제 발사 처리 함수
-        RaycastHit hit;
-        Vector3 hitPos = Vector3.zero;
-        if (Physics.Raycast(firepos.position, firepos.forward, out hit, fireDistance))
-        {
-            I_Damageable target = hit.collider.GetComponent<I_Damageable>();
-            // 충돌한 오브젝트에서 인터페이스를 찾음
-            if(target != null)
-            {
-                target.OnDamage (gunData.damage, hit.point, hit.normal);
-                // 충돌한 오브젝트가 I_Damageable을 구현하고 있다면 데미지 처리
-            }
-            hitPos = hit.point; // 충돌 지점 저장
-        }
-        else
-        {
-            hitPos = firepos.position + firepos.forward * fireDistance;
-            // 충돌이 없으면 사정거리 끝 지점으로 설정
-        }
-        StartCoroutine(ShotEffect(hitPos)); // 발사 이펙트 코루틴 시작
+        //RaycastHit hit;
+        //Vector3 hitPos = Vector3.zero;
+        //if (Physics.Raycast(firepos.position, firepos.forward, out hit, fireDistance))
+        //{
+        //    I_Damageable target = hit.collider.GetComponent<I_Damageable>();
+        //    // 충돌한 오브젝트에서 인터페이스를 찾음
+        //    if(target != null)
+        //    {
+        //        target.OnDamage (gunData.damage, hit.point, hit.normal);
+        //        // 충돌한 오브젝트가 I_Damageable을 구현하고 있다면 데미지 처리
+        //    }
+        //    hitPos = hit.point; // 충돌 지점 저장
+        //}
+        //else
+        //{
+        //    hitPos = firepos.position + firepos.forward * fireDistance;
+        //    // 충돌이 없으면 사정거리 끝 지점으로 설정
+        //}
+        // 실제 발사 처리 함수를 호스트에서 대리 실행(네트워크 게임의 경우)
+        photonView.RPC("ShotProcessOnServer", RpcTarget.MasterClient);
+
         magAmmo--;
         if (magAmmo <= 0)
         {
@@ -105,6 +137,35 @@ public class Gun : MonoBehaviour
 
         yield return shotEffectWS;
         lineRenderer.enabled = false;   // 0.03초 뒤 비활성화
+    }
+
+    [PunRPC]
+    private void ShotProcessOnServer()
+    {
+        RaycastHit hit; // 레이캐스트에 의한 충돌 정보를 저장
+        Vector3 hitPosition = Vector3.zero; // 총알이 맞은 곳을 저장할 변수
+
+        if (Physics.Raycast(firepos.position, firepos.forward, out hit, fireDistance))  // 레이캐스트(시작지점, 방향, 충돌정보, 사정거리)
+        {
+            I_Damageable target = hit.collider.GetComponent<I_Damageable>();    // 레이가 어떠한 물체와 충돌한경우 충동한 상대방으로 부터 I_Damageable 오브젝트 가져오기
+            if (target != null)
+            {
+                target.OnDamage(gunData.damage, hit.point, hit.normal); // 상대방의 OnDamage 함수를 실행시켜서 상대방에게 데미지 주기
+            }
+            hitPosition = hit.point;    // 레이가 충돌한 위치 저장
+        }
+        else
+        {
+            // 레이가 다른 물체와 충돌하지 않았다면, 총알이 최대 사정거리까지 날아갔을때의 위치를 충돌 위치로 사용
+            hitPosition = firepos.position + firepos.forward * fireDistance;
+        }
+        photonView.RPC("ShotEffectProcessOnClients", RpcTarget.All, hitPosition);
+    }
+
+    [PunRPC]
+    private void ShotEffectProcessOnClients(Vector3 hitPosition)    // 이펙트 코루틴 맵핑
+    {
+        StartCoroutine(ShotEffect(hitPosition));
     }
 
     public bool Reload()

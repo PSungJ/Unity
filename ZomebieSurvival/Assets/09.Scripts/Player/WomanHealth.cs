@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class WomanHealth : LivingEntity
 {
@@ -30,6 +31,7 @@ public class WomanHealth : LivingEntity
         movement.enabled = true;
         shooter.enabled = true;     // 캐릭터의 이동, 슈팅 컴포넌트 활성화
     }
+    [PunRPC]
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         if (!dead)  // 죽지 않은 상태라면
@@ -38,6 +40,8 @@ public class WomanHealth : LivingEntity
         base.OnDamage(damage, hitPoint, hitNormal);
         healthSlider.value = health;
     }
+
+    [PunRPC]
     public override void RestoreHealth(float newHealth)
     {
         base.RestoreHealth(newHealth);
@@ -52,6 +56,8 @@ public class WomanHealth : LivingEntity
         ani.SetTrigger(hashDie);
         movement.enabled = false;
         shooter.enabled = false;        // 캐릭터 이동, 슈팅 스크립트 비활성화
+
+        Invoke("Respawn", 5f);
     }
     private void OnTriggerEnter(Collider other) //isTrigger
     {
@@ -60,9 +66,24 @@ public class WomanHealth : LivingEntity
             I_Item item = other.GetComponent<I_Item>(); // I_Item 인터페이스를 구현한 컴포넌트 호출
             if (item != null)
             {
-                item.Use(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                    item.Use(gameObject);
+                
                 source.PlayOneShot(itemPickUpClip);
             }
         }
+    }
+    public void Respawn()
+    {
+        if (photonView.IsMine)
+        {
+            Vector3 randomSpawnPos = Random.insideUnitSphere * 5f;  // 원점에서 반경 5유닛 내부의 랜덤한 위치 지정
+            randomSpawnPos.y = 0f;      // 랜덤위치의 y값은 0으로 고정
+            transform.position = randomSpawnPos;    // 지정한 랜덤위치로 이동
+        }
+        // 컴포넌트들을 리셋하기 위해 게임 오브젝트를 잠시 껏다가 다시 켜기
+        // 컴포넌트들의 OnDisable(), OnEnable() 메서드가 실행됨
+        gameObject.SetActive(false);
+        gameObject.SetActive(true);
     }
 }

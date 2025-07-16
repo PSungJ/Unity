@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 // 1. 필요한 컴퍼넌트 : NavMeshAgent, Audio(source,clip), Collider, 
 // BloodEffect, 랜더러
 public class Zombie : LivingEntity
@@ -45,6 +46,7 @@ public class Zombie : LivingEntity
         meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
+    [PunRPC]
     public void SetUp(ZombieData zombieData) // 좀비 AI 초기 스펙 설정값 메서드
     {
         startingHealth = zombieData.health; // 초기 체력 설정
@@ -55,11 +57,15 @@ public class Zombie : LivingEntity
 
     private void Start()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
+
         StartCoroutine (UpdatePath());
     }
 
     void Update()
     {
+        if (!PhotonNetwork.IsMasterClient) return; // 호스트가 아니라면 애니메이션의 파라미터를 직접 갱신하지 않음
+
         ani.SetBool(hashTarget, hasTarget);
     }
 
@@ -90,6 +96,8 @@ public class Zombie : LivingEntity
             yield return traceWS; // 0.25초마다 경로 업데이트
         }
     }
+
+    [PunRPC]
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         if (!dead)
@@ -99,6 +107,7 @@ public class Zombie : LivingEntity
             hitEffect.Play();
             source.PlayOneShot(hitClip);
         }
+        // LivingEntity의 OnDamage()를 실행하여 데미지 호출
         base.OnDamage(damage, hitPoint, hitNormal);
     }
     public override void Die()
@@ -117,6 +126,8 @@ public class Zombie : LivingEntity
     }
     public void OnTriggerStay(Collider other)   // 트리거 안에 있을 때 특정 기능 유지
     {
+        if (!PhotonNetwork.IsMasterClient) return;  // 호스트가 아니라면 공격 실행하지 않음
+
         // 트리거가 충돌한 상대방 게임 오브젝트가 추적 대상이라면 공격 실행
         if (!dead && Time.time >= lastAttackTime + timeBetAttack)   // 사망하지 않았고 최근 공격시점에서 timeBetAttack 시간 이상이 지난경우 공격 가능
         {

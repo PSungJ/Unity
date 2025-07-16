@@ -41,6 +41,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnected)
         {
             connectInfoTxt.text = $"Connecting...";
+            PhotonNetwork.JoinRandomRoom();
         }
         else
         {

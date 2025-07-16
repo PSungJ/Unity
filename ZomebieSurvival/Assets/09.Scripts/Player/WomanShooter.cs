@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class WomanShooter : MonoBehaviour
+public class WomanShooter : MonoBehaviourPun
 {
     public Gun gun;
     public Transform gunPivot;      // 총의 회전 중심 피봇
@@ -29,6 +30,8 @@ public class WomanShooter : MonoBehaviour
 
     void Update()
     {
+        if (!photonView.IsMine) return;
+
         // 입력을 감지하고 총을 발사하거나 재장전
         if (input.fire)
         {

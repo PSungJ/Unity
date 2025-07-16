@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
-
-public class ItemSpawner : MonoBehaviour
+public class ItemSpawner : MonoBehaviourPun
 {
     public GameObject[] items;  // 생성할 아이템
     public Transform playerTr;
@@ -24,6 +24,8 @@ public class ItemSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PhotonNetwork.IsMasterClient) return;  // 호스트에서만 아이템 생성가능
+
         // 현재 시점이 마지막 생성 시점에서 생성주기 이상으로 지나고 플레이어가 살아있을때
         if(Time.time >= lastSpawnTime + timeBetSpawn && playerTr != null)
         {
@@ -38,9 +40,18 @@ public class ItemSpawner : MonoBehaviour
         Vector3 spawnPosition = GetRandomPointOnNavMesh(playerTr.position, maxDistance);
         spawnPosition += Vector3.up * 0.5f; // 바닥에서 0.5 높이만큼 위로 올리기
         // 아이템 중 하나를 무작위로 골라 랜덤 위치에 생성
-        GameObject selectedItem = items[Random.Range(0, items.Length)];
-        GameObject item = Instantiate(selectedItem, spawnPosition, Quaternion.identity);
-        Destroy(item, 5f);  // 5초뒤에 아이템 파괴
+        GameObject itemToCreate = items[Random.Range(0, items.Length)];
+        GameObject item = PhotonNetwork.Instantiate(itemToCreate.name, spawnPosition, Quaternion.identity);
+        
+        StartCoroutine(DestroyAfter(item, 5f));  // 5초뒤에 생성된 아이템 파괴
+    }
+
+    IEnumerator DestroyAfter(GameObject target, float delay)    // 포톤의 PhotonNetwork.Destroy를 지연 실행하는 코루틴
+    {
+        yield return new WaitForSeconds(delay); // delay만큼 대기
+        
+        if (target != null) // target이 파괴되지 않았으면 파괴
+            PhotonNetwork.Destroy(target);
     }
 
     // NavMesh 위의 랜덤한 위치를 반환하는 메서드

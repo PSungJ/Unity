@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 // 1. 컴퍼넌트선언 - 애니메이터, RigidBody, Input스크립트
-public class WomanMovement : MonoBehaviour
+public class WomanMovement : MonoBehaviourPun
 {
     [SerializeField] private WomanInput input;
     [SerializeField] private Rigidbody rb;
@@ -25,6 +26,8 @@ public class WomanMovement : MonoBehaviour
 
     void FixedUpdate()  // 물리적인 갱신 주기마다 애니메이션 호출
     {
+        if (!photonView.IsMine) return;
+
         Move();
         Rotate();
     }

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using Photon.Pun;
 
-public class WomanInput : MonoBehaviour
+public class WomanInput : MonoBehaviourPun
 {
     public string moveXAxisName = "Horizontal";    // 좌우 이동
     public string moveZAxisName = "Vertical";        // 앞뒤 이동
@@ -22,6 +23,8 @@ public class WomanInput : MonoBehaviour
  
     void Update()
     {
+        if (!photonView.IsMine) return;
+
         if (GameManager.instance != null && GameManager.instance.isGameOver)
         {
             moveZ = 0f;
