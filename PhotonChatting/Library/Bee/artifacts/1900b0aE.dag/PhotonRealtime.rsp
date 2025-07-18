@@ -359,7 +359,6 @@
 "Assets/Photon/PhotonRealtime/Code/FriendInfo.cs"
 "Assets/Photon/PhotonRealtime/Code/LoadBalancingClient.cs"
 "Assets/Photon/PhotonRealtime/Code/LoadBalancingPeer.cs"
-"Assets/Photon/PhotonRealtime/Code/LoadbalancingPeer.cs"
 "Assets/Photon/PhotonRealtime/Code/PhotonPing.cs"
 "Assets/Photon/PhotonRealtime/Code/PhotonPingClasses.cs"
 "Assets/Photon/PhotonRealtime/Code/Player.cs"

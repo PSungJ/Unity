@@ -9,10 +9,10 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
-        GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 3000f);
+        GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 5000f);
         // AddRelativeForce는 Unity 게임엔진에서 오브젝트에 상대적인 전방 방향으로 힘을 가하는 것이다.
         // 로컬 좌표계 기준 (오브젝트 자체의 앞, 위, 옆 기준)
-        Destroy(this.gameObject, 1.0f);
+        Destroy(this.gameObject, 0.2f);
     }
 
     private void OnCollisionEnter(Collision col)

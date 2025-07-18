@@ -17,6 +17,6 @@ public class PlayerInput : MonoBehaviour
     {
         h = Input.GetAxis(Hori);
         v = Input.GetAxis(Verti);
-        isMouseClick = Input.GetMouseButtonDown(0);
+        isMouseClick = Input.GetMouseButton(0);
     }
 }

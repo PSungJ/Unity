@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviourPun, IPunObservable
         Vector3 moveDir =(cameraForward *input.v) +(cameraRight *input.h);
         moveDir.Set(moveDir.x, 0f,moveDir.z);
         // 주인공 캐릭터 이동 처리 캐릭터 컨트롤러로 이동 
-        controller.SimpleMove(moveDir * moveSpeed);
+        controller.SimpleMove(moveDir * moveSpeed); 
         //주인공 캐릭터의 애니메이션 처리
         float forward = Vector3.Dot(moveDir,transform.forward);
         float strafe = Vector3.Dot(moveDir,transform .right);
