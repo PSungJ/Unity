@@ -5335,6 +5335,100 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303619075}
   m_CullTransparentMesh: 1
+--- !u!1 &309920079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 309920081}
+  - component: {fileID: 309920080}
+  m_Layer: 0
+  m_Name: Directional Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!108 &309920080
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309920079}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 1
+  m_Shape: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &309920081
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309920079}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalPosition: {x: 3.3463354, y: 17.744223, z: -8.534775}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &310915590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6096,7 +6190,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Spark: {fileID: 0}
-  source: {fileID: 0}
   hitClip: {fileID: 0}
 --- !u!82 &536747885
 AudioSource:
@@ -8686,16 +8779,19 @@ PrefabInstance:
       addedObject: {fileID: 931769296}
     - targetCorrespondingSourceObject: {fileID: 100046, guid: f3cd25b3bf53c4adaaf087d862e435e6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 931769299}
+      addedObject: {fileID: 931769302}
     - targetCorrespondingSourceObject: {fileID: 100046, guid: f3cd25b3bf53c4adaaf087d862e435e6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 931769302}
+      addedObject: {fileID: 931769299}
     - targetCorrespondingSourceObject: {fileID: 100046, guid: f3cd25b3bf53c4adaaf087d862e435e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 931769304}
     - targetCorrespondingSourceObject: {fileID: 100046, guid: f3cd25b3bf53c4adaaf087d862e435e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 931769301}
+    - targetCorrespondingSourceObject: {fileID: 100046, guid: f3cd25b3bf53c4adaaf087d862e435e6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 931769305}
   m_SourcePrefab: {fileID: 100100000, guid: f3cd25b3bf53c4adaaf087d862e435e6, type: 3}
 --- !u!4 &931769284 stripped
 Transform:
@@ -8766,11 +8862,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db7c0bbdadb9674f8588428aec5e20a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveZAxisName: Vertical
-  moveXAxisName: Horizontal
-  fireButtonName: Fire1
-  reloadButtonName: Reload
-  mouseX: Mouse X
 --- !u!136 &931769297
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8833,8 +8924,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6252813a7f3d9244e8eada262d2e9673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 0}
-  movespeed: 5
+  input: {fileID: 931769296}
+  movespeed: 10
   isRun: 0
 --- !u!82 &931769301
 AudioSource:
@@ -8986,6 +9077,100 @@ MonoBehaviour:
   initHp: 100
   bloodScreen: {fileID: 3861222}
   hpBar: {fileID: 1766506698}
+--- !u!114 &931769305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931769286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: fc1e87b71208dde4e9dc78f746a1cef0, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 931769296}
+        m_TargetAssemblyTypeName: TPSPlayerInput, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a112e368-0542-4d68-93f4-409fa75f8424
+    m_ActionName: TPSActionMap/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 931769296}
+        m_TargetAssemblyTypeName: TPSPlayerInput, Assembly-CSharp
+        m_MethodName: OnLook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0cd16f76-7701-45ed-b350-002e724e8a50
+    m_ActionName: TPSActionMap/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 931769296}
+        m_TargetAssemblyTypeName: TPSPlayerInput, Assembly-CSharp
+        m_MethodName: OnFire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 23e811bc-9bfe-4dbc-aa43-ff7d0734d1d1
+    m_ActionName: TPSActionMap/Fire[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 931769296}
+        m_TargetAssemblyTypeName: TPSPlayerInput, Assembly-CSharp
+        m_MethodName: OnSprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7dd5c6a8-afca-4090-bc70-fc50461fe11c
+    m_ActionName: TPSActionMap/Sprint[/Keyboard/leftShift]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: TPSActionMap
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &950007041 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 356407736053427440, guid: 909fae1f70fd865448d362bc5e016ebe, type: 3}
@@ -9004,7 +9189,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Spark: {fileID: 0}
-  source: {fileID: 0}
   hitClip: {fileID: 0}
 --- !u!82 &950007046
 AudioSource:
@@ -11558,7 +11742,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Spark: {fileID: 0}
-  source: {fileID: 0}
   hitClip: {fileID: 0}
 --- !u!82 &1501084313
 AudioSource:
@@ -12948,7 +13131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Spark: {fileID: 0}
-  source: {fileID: 0}
   hitClip: {fileID: 0}
 --- !u!82 &1847753276
 AudioSource:
@@ -13092,6 +13274,9 @@ MonoBehaviour:
   uiCanvas: {fileID: 1429901812}
   hpBarprefab: {fileID: 0}
   hpBarPool: []
+  expPrefab: {fileID: 0}
+  b_maxPool: 10
+  expPool: []
 --- !u!4 &1885508142
 Transform:
   m_ObjectHideFlags: 0
@@ -19325,3 +19510,4 @@ SceneRoots:
   - {fileID: 1885508142}
   - {fileID: 1429901813}
   - {fileID: 24472999}
+  - {fileID: 309920081}

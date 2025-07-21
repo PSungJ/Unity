@@ -77,16 +77,17 @@ public class TPSFire : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject()) return;
         // 버튼에 닿았다면  하위 경로로 내려가지 않고 빠져나감 이벤트 훅 
 
-        RaycastHit hit;
-        if(Physics.Raycast(firePos.position, firePos.forward, out hit, 20f, layerMask))
-        {
-            isFire = (hit.collider.CompareTag(enemyTag)); // 적 캐릭터가 맞았을 때 발사 가능 
-        }
-        else
-        {
-            isFire = false;
-        }
-        if(!isReloading && isFire)
+        //RaycastHit hit;
+        //if(Physics.Raycast(firePos.position, firePos.forward, out hit, 20f, layerMask))
+        //{
+        //    input.isFiring = (hit.collider.CompareTag(enemyTag)); // 적 캐릭터가 맞았을 때 발사 가능 
+
+        //}
+        //else
+        //{
+        //    input.isFiring = false;
+        //}
+        if(!isReloading && input.isFiring && tpsctrl.isRun == false)
         {
             if(Time.time > nextFie)
             {
@@ -99,20 +100,20 @@ public class TPSFire : MonoBehaviour
             nextFie = Time.time + autoFireRate;
             }
         }
-        if (!isReloading && input.fire && tpsctrl.isRun == false)
+        //if (!isReloading && input.isFiring && tpsctrl.isRun == false)
 
-        {
-            if (Time.time - timePrev >= fireRate)
-            {
-                timePrev = Time.time;
-                --remainingBullet;
-                Fire();
-                if (remainingBullet == 0)
-                {
-                    StartCoroutine(Reloading());
-                }
-            }
-        }
+        //{
+        //    if (Time.time - timePrev >= fireRate)
+        //    {
+        //        timePrev = Time.time;
+        //        --remainingBullet;
+        //        Fire();
+        //        if (remainingBullet == 0)
+        //        {
+        //            StartCoroutine(Reloading());
+        //        }
+        //    }
+        //}
     }
     IEnumerator Reloading()
     {

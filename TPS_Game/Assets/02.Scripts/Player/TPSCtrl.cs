@@ -18,20 +18,20 @@ public class TPSCtrl : MonoBehaviour
     }
     void Update()
     {
-        Vector3 moveDir =(Vector3.forward * input.moveZ) +(Vector3.right * input.moveX);
-        tr.Translate(moveDir.normalized * Time.deltaTime *moveSpeed);
-        tr.Rotate(Vector3.up * input.mouseRotate *Time.deltaTime *rotSpeed);
-        //애니메이션 구현 
-        if (input.moveX > 0.1f)
-            anim.CrossFade("RunR", 0.2f);
-        else if (input.moveX < -0.1f)
-            anim.CrossFade("RunL", 0.2f);
-        else if (input.moveZ > 0.1f)
-            anim.CrossFade("RunF", 0.2f);
-        else if (input.moveZ < -0.1f)
-            anim.CrossFade("RunB", 0.2f);
-        else
-            anim.CrossFade("Idle", 0.2f);
+        //Vector3 moveDir =(Vector3.forward * input.moveZ) +(Vector3.right * input.moveX);
+        //tr.Translate(moveDir.normalized * Time.deltaTime *moveSpeed);
+        //tr.Rotate(Vector3.up * input.mouseRotate *Time.deltaTime *rotSpeed);
+        ////애니메이션 구현 
+        //if (input.moveX > 0.1f)
+        //    anim.CrossFade("RunR", 0.2f);
+        //else if (input.moveX < -0.1f)
+        //    anim.CrossFade("RunL", 0.2f);
+        //else if (input.moveZ > 0.1f)
+        //    anim.CrossFade("RunF", 0.2f);
+        //else if (input.moveZ < -0.1f)
+        //    anim.CrossFade("RunB", 0.2f);
+        //else
+        //    anim.CrossFade("Idle", 0.2f);
 
     }
 }
