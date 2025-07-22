@@ -8,7 +8,7 @@ public class Damage : MonoBehaviour
     private readonly string e_bulletTag = "E_BULLET";
     private const string enemyTag = "ENEMY";
     public float initHp = 100f;
-    private float curHp = 0f;
+    public float curHp = 0f;
     public Image bloodScreen;
     public Image hpBar;
     private readonly Color initColor = new Color(0f, 1f, 0f, 1f);

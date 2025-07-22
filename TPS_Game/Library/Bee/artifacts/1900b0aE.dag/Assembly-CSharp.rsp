@@ -387,6 +387,8 @@
 "Assets/02.Scripts/Enemy/EnemyFOV.cs"
 "Assets/02.Scripts/Enemy/EnemyHpBar.cs"
 "Assets/02.Scripts/Enemy/MoveAgent.cs"
+"Assets/02.Scripts/GrenadeMove.cs"
+"Assets/02.Scripts/KatjaMove.cs"
 "Assets/02.Scripts/Player/BulletCtrl.cs"
 "Assets/02.Scripts/Player/Damage.cs"
 "Assets/02.Scripts/Player/ObstacleAvoidCam.cs"
