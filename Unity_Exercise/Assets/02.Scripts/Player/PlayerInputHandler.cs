@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,10 @@ public class PlayerInputHandler : MonoBehaviour
     public float MoveRot { get; private set; } = 0f;
     public Vector3 moveDir { get; private set; } = Vector3.zero;
     public bool isJump { get; private set; } = false;
+    public bool isFiring { get; private set; } = false;
+
+    public event Action OnFireStarted;
+    public event Action OnFireCanceled;
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
@@ -22,7 +27,7 @@ public class PlayerInputHandler : MonoBehaviour
         {
             isJump = true;
         }
-        if (ctx.canceled)
+        else if (ctx.canceled)
         {
             isJump = false;
         }
@@ -32,5 +37,19 @@ public class PlayerInputHandler : MonoBehaviour
     {
         float rot = ctx.ReadValue<float>();
         MoveRot = rot;
+    }
+
+    public void OnShoot(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            isFiring = true;
+            OnFireStarted?.Invoke();
+        }
+        else if (ctx.canceled)
+        {
+            isFiring = false;
+            OnFireCanceled?.Invoke();
+        }
     }
 }
